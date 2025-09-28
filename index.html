@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Plexzora — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@600;800&family=Roboto:wght@400;500;700&display=stylesheet">
+<style>
+  :root{
+    --bg: #FFFFFF;
+    --panel: #FFFFFF;
+    --glass: rgba(255,255,255,0.7);
+    --text: #1A1A1A;
+    --muted: #666666;
+    --line: rgba(0, 0, 0, 0.2);
+    --accent: #00B7FF;
+    --accent-2: #005F99;
+    --accent-3: #00E6FF;
+    --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    --radius-xl: 22px;
+    --radius-2xl: 28px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color:var(--text);
+    background: var(--bg);
+    overflow-y:auto;
+  }
+
+  /* Top bar */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter: blur(12px);
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
+    border-bottom:1px solid var(--line);
+    padding:12px 18px;
+  }
+  .topbar-inner{
+    display:flex; align-items:center; justify-content:space-between; gap:14px; max-width:1200px; margin:0 auto;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text);
+  }
+  .logo{
+    width:38px; height:38px; display:grid; place-items:center; border-radius:12px;
+    background: radial-gradient(120% 120% at 20% 20%, var(--accent), transparent 60%),
+                radial-gradient(120% 120% at 80% 80%, var(--accent-2), transparent 60%), #FFFFFF;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1), 0 0 28px rgba(0, 0, 0, 0.05);
+    position:relative; overflow:hidden;
+  }
+  .logo:after{
+    content:""; position:absolute; inset:2px; border-radius:10px; border:1px solid var(--line);
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.1);
+  }
+  .brand-name{
+    font-family: Orbitron, Inter, sans-serif; font-weight:800; letter-spacing:.5px; font-size:18px;
+  }
+  .nav-right{
+    display:flex; 
+    align-items:center; 
+    justify-content: flex-end;
+  }
+  .btn-logout{
+    appearance:none; 
+    border:1px solid var(--line); 
+    border-radius:12px; 
+    padding:8px 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    color: var(--text); 
+    font-weight:600; 
+    font-size:13px; 
+    cursor:pointer;
+    transition:.25s ease transform, .25s ease box-shadow, .25s ease background;
+  }
+  .btn-logout:hover{
+    transform: translateY(-2px);
+    background: linear-gradient(180deg, rgba(255,183,183,0.9), rgba(255,183,183,0.7));
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  .btn-logout:active{
+    transform: translateY(0);
+    background: linear-gradient(180deg, rgba(255,150,150,0.9), rgba(255,150,150,0.7));
+  }
+
+  /* Container + header */
+  .container{max-width:1200px; padding:26px 18px 80px; margin:0 auto; position:relative;}
+  .page-head{
+    display:flex; align-items:flex-end; justify-content:space-between; gap:20px; margin:6px 0 18px;
+  }
+  .page-head.hidden{display:none;}
+  .h1{
+    font-family: Orbitron, Inter, sans-serif; font-size:28px; font-weight:800; line-height:1.2;
+  }
+  .h1 span{
+    background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .tagline{color:var(--muted); font-size:14px; margin-top:6px}
+
+  .quick-actions{display:flex; gap:10px; flex-wrap:wrap}
+  .btn{
+    appearance:none; border:1px solid var(--line); border-radius:16px; padding:12px 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    color:var(--text); font-weight:600; font-size:14px; cursor:pointer; box-shadow: var(--shadow);
+    transition:.25s ease transform, .25s ease box-shadow, .25s ease border-color;
+  }
+  .btn:hover{transform: translateY(-2px); box-shadow: 0 12px 42px rgba(0, 0, 0, 0.15)}
+  .btn:disabled {
+    background: linear-gradient(180deg, rgba(200, 200, 200, 0.9), rgba(200, 200, 200, 0.7));
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  .btn-primary{
+    background: radial-gradient(120% 120% at 20% 0%, rgba(0, 183, 255, 0.3), transparent 60%),
+                radial-gradient(120% 120% at 100% 100%, rgba(0, 230, 255, 0.25), transparent 60%),
+                linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+    border-color: var(--line);
+  }
+  .btn-copied {
+    background: linear-gradient(180deg, rgba(200, 255, 200, 0.9), rgba(200, 255, 200, 0.7));
+    border-color: #00cc00;
+  }
+  .btn-telegram {
+    background: radial-gradient(120% 120% at 20% 0%, rgba(0, 183, 255, 0.3), transparent 60%),
+                radial-gradient(120% 120% at 100% 100%, rgba(0, 230, 255, 0.25), transparent 60%),
+                linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+    border-color: var(--line);
+  }
+
+  /* Grid */
+  .grid{display:grid; gap:16px; grid-template-columns: 1fr;}
+  .grid.hidden{display:none;}
+  @media (max-width:1024px){ .grid{grid-template-columns: 1fr}}
+
+  /* Cards */
+  .card{
+    border-radius: var(--radius-2xl); background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    border:1px solid var(--line); box-shadow: var(--shadow); overflow:hidden; position:relative;
+  }
+  .card .head{
+    display:flex; align-items:center; justify-content:space-between; gap:10px; padding:16px 18px; border-bottom:1px solid var(--line);
+  }
+  .card .title{font-weight:800; letter-spacing:.2px}
+  .card .content{padding:14px 18px}
+
+  .glow-ring{
+    position:absolute; inset:-1px; border-radius:inherit; pointer-events:none;
+    background: conic-gradient(from 0deg, rgba(0, 183, 255, 0.0), rgba(0, 183, 255, 0.25), rgba(0, 95, 153, 0.25), rgba(0, 230, 255, 0.25), rgba(0, 183, 255, 0.0) 70%);
+    filter: blur(24px); opacity:.4; mask: radial-gradient(120% 120% at 50% 50%, rgba(0,0,0,0) 58%, rgba(0,0,0,1) 60%);
+  }
+
+  /* Recent forms */
+  .forms{display:grid; gap:12px; grid-template-columns: repeat(3, minmax(0, 1fr));}
+  @media (max-width:900px){ .forms{grid-template-columns: repeat(2, 1fr)}}
+  @media (max-width:620px){ .forms{grid-template-columns: 1fr}}
+  .form-card{
+    border:1px solid var(--line); border-radius:18px; padding:14px; background:linear-gradient(180deg,#FFFFFF,#F5F5F5);
+    position:relative; overflow:hidden; transition:.2s ease transform, .2s ease border;
+  }
+  .form-card:hover{transform: translateY(-3px); border-color: rgba(0, 0, 0, 0.3)}
+  .form-row{
+    display:flex; align-items:center; justify-content:space-between; gap:6px;
+  }
+  .form-name{font-weight:700}
+  .form-meta{color:var(--muted); font-size:12px; margin-top:6px}
+  .form-actions{
+    display:flex; gap:3px; margin-top:12px; flex-wrap:nowrap; justify-content:flex-start; margin-left:6px; margin-right:12px;
+  }
+  .form-actions .btn{
+    padding:6px 8px; font-size:12px; border-radius:12px; flex:1; text-align:center;
+  }
+  .chip{
+    font-size:11px; padding:6px 10px; border-radius:999px; border:1px solid var(--line);
+    color:var(--muted); background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+  }
+  .delete-btn{
+    appearance:none; border:1px solid var(--line); border-radius:50%; width:28px; height:28px; display:grid; place-items:center;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)); color:var(--text); font-size:13px;
+    cursor:pointer; transition:.2s ease transform, .2s ease background;
+  }
+  .delete-btn:hover{
+    transform: scale(1.1); background: linear-gradient(180deg, rgba(255,183,183,0.9), rgba(255,183,183,0.7));
+  }
+
+  .mono{font-variant-numeric: tabular-nums}
+  .muted{color:var(--muted)}
+  .hidden{display:none}
+
+  /* Expiry and Upgrade Message */
+  .expiry-info {
+    color: var(--accent-3);
+    font-weight: 600;
+    font-size: 12px;
+    display: inline-block;
+    margin-left: 4px;
+  }
+  .upgrade-message {
+    color: var(--accent-3);
+    font-weight: 600;
+    font-size: 12px;
+    margin-top: 6px;
+    display: block;
+    text-decoration: none;
+  }
+  .upgrade-message:hover {
+    text-decoration: underline;
+  }
+
+  /* Loading state */
+  .loading{
+    text-align: center;
+    color: var(--muted);
+    padding: 20px;
+  }
+  .loading:after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--line);
+    border-radius: 50%;
+    border-top: 2px solid var(--accent);
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Error state */
+  .error{
+    background: #fee;
+    border: 1px solid #fcc;
+    border-radius: 12px;
+    padding: 16px;
+    color: #900;
+    text-align: center;
+  }
+
+  /* Modal styles */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+  }
+  .modal-overlay.show {
+    display: block;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--panel);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    max-width: 700px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 1001;
+    padding: 20px;
+  }
+  .modal.show {
+    display: block;
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .modal-title {
+    font-family: Orbitron, Inter, sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--muted);
+  }
+  .modal-close:hover {
+    color: var(--accent);
+  }
+  .modal-content {
+    padding: 20px 0;
+  }
+  /* Submissions Modal Specific Styles */
+  #submissionsModal .modal-content {
+    padding: 20px 0;
+  }
+  .submission-item {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: linear-gradient(180deg, #FFFFFF, #F5F5F5);
+    position: relative;
+  }
+  .submission-meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .submission-data {
+    font-size: 13px;
+  }
+  .submission-data p {
+    margin: 4px 0;
+  }
+  .submission-delete-btn {
+    appearance: none;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    color: var(--text);
+    font-size: 12px;
+    cursor: pointer;
+    transition: .2s ease transform, .2s ease background;
+  }
+  .submission-delete-btn:hover {
+    transform: scale(1.1);
+    background: linear-gradient(180deg, rgba(255,183,183,0.9), rgba(255,183,183,0.7));
+  }
+
+  /* Plans Modal Specific Styles */
+  #plansModal .modal-content {
+    display: flex;
+    justify-content: center;
+  }
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .plan-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    padding: 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    position: relative;
+    transition: .2s ease transform;
+  }
+  .plan-card:hover {
+    transform: translateY(-2px);
+  }
+  .plan-card h2 {
+    font-family: Orbitron, Inter, sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .plan-card p.sub {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+  .plan-card ul {
+    list-style: none;
+    padding: 0 10px;
+    margin: 0 0 16px 0;
+    text-align: left;
+    font-size: 0.9rem;
+  }
+  .plan-card ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--text);
+  }
+  .plan-card ul li:last-child {
+    border-bottom: none;
+  }
+  .plan-card .price {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 12px 0;
+    color: var(--text);
+  }
+  .plan-card .btn {
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    width: 100%;
+    font-weight: 600;
+  }
+  .plan-card.free .btn {
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    border-color: var(--line);
+    color: var(--muted);
+    cursor: not-allowed;
+  }
+  .plan-card.premium h2 {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .plan-card.premium .btn {
+    background: radial-gradient(120% 120% at 20% 0%, rgba(0, 183, 255, 0.3), transparent 60%),
+                radial-gradient(120% 120% at 100% 100%, rgba(0, 230, 255, 0.25), transparent 60%),
+                linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+    border-color: var(--accent);
+    color: var(--text);
+  }
+  .plan-card.premium .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 42px rgba(0, 0, 0, 0.15);
+  }
+  .plan-card.premium .btn:disabled {
+    background: linear-gradient(180deg, rgba(200, 200, 200, 0.9), rgba(200, 200, 200, 0.7));
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  .toggle {
+    display: flex;
+    justify-content: center;
+    margin: 12px 0;
+    gap: 10px;
+  }
+  .toggle button {
+    padding: 8px 16px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 10px;
+    color: var(--text);
+    font-weight: 500;
+    transition: .25s ease background, .25s ease border-color, .25s ease transform;
+  }
+  .toggle button.active {
+    background: radial-gradient(120% 120% at 20% 0%, rgba(0, 183, 255, 0.3), transparent 60%),
+                linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+    border-color: var(--accent);
+    font-weight: 600;
+    transform: scale(1.05);
+  }
+  .toggle button:hover:not(.active) {
+    background: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,0.9));
+    border-color: var(--accent-2);
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <div class="brand-name">PLEXZORA</div>
+        <div class="muted" style="font-size:11px; margin-top:2px">Forms for the good guys & the street guys</div>
+      </div>
+    </a>
+    <div class="nav-right">
+      <button class="btn-logout" id="btnLogout">Logout</button>
+    </div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="container">
+  <!-- Dashboard Content -->
+  <div class="page-head" id="pageHead">
+    <div>
+      <div class="h1">Welcome back, <span>User</span>. Your forms, your rules.</div>
+      <div class="tagline">Build, deploy, and track forms faster than the other guys — with style.</div>
+    </div>
+    <div class="quick-actions">
+      <button class="btn btn-primary" id="btnNewForm">➕ New Form</button>
+      <button class="btn" id="btnUpgrade">🚀 Upgrade</button>
+      <button class="btn btn-telegram" id="btnTelegram">📢 Connect Telegram</button>
+    </div>
+  </div>
+
+  <div class="grid" id="dashboardGrid">
+    <div class="card" id="recentCard">
+      <div class="glow-ring"></div>
+      <div class="head">
+        <div class="title">Recent Forms</div>
+        <div class="muted" id="formsCount">Loading...</div>
+      </div>
+      <div class="content">
+        <div class="forms" id="formsGrid">
+          <div class="loading">Loading forms</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for submissions -->
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="modal" id="submissionsModal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Form Submissions</div>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+
+  <!-- Modal for plans -->
+  <div class="modal" id="plansModal">
+    <div class="modal-header">
+      <div class="modal-title">Choose Your Plan</div>
+      <button class="modal-close" id="plansModalClose">&times;</button>
+    </div>
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<script>
+  // —— Utilities ——
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => document.querySelectorAll(sel);
+  const fmt = n => n.toLocaleString();
+
+  // Store form expiration times for ticking and subscription status
+  let formExpirations = {};
+  let subscriptionStatus = { isSubscribed: false, billingPeriod: null, endDate: null };
+  let userEmail = null;
+  let userId = null;
+  let pollingInterval = null;
+
+  // Base URL for backend
+  const BASE_URL = 'https://plexzora.onrender.com';
+
+  // Get token from localStorage
+  function getToken() {
+    return localStorage.getItem('token');
+  }
+
+  // Redirect to login if no token
+  function redirectToLogin() {
+    console.log('Redirecting to login: No token found');
+    stopPolling();
+    window.location.href = 'login.html';
+  }
+
+  // Sanitize strings to prevent XSS
+  function sanitize(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = String(str);
+    return div.innerHTML;
+  }
+
+  // Calculate remaining time for a form
+  function calculateRemainingTime(expiresAt, formId) {
+    try {
+      console.log(`Form ${formId}: Processing expiresAt=${expiresAt}`);
+      if (!expiresAt) {
+        console.log(`Form ${formId}: No expiresAt, returning 'No expiration'`);
+        return 'No expiration';
+      }
+
+      const expiryTime = new Date(expiresAt).getTime();
+      if (isNaN(expiryTime)) {
+        console.error(`Form ${formId}: Invalid expiresAt format: ${expiresAt}`);
+        return 'Invalid date';
+      }
+
+      const now = Date.now();
+      const diffMs = expiryTime - now;
+      console.log(`Form ${formId}: expiryTime=${expiryTime}, now=${now}, diffMs=${diffMs}`);
+
+      if (diffMs <= 0) {
+        console.log(`Form ${formId}: Expired`);
+        return 'Expired';
+      }
+
+      const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+      let result = '';
+      if (days > 0) result += `${days}d `;
+      if (hours > 0 || days > 0) result += `${hours}h `;
+      if (minutes > 0 || hours > 0 || days > 0) result += `${minutes}m `;
+      result += `${seconds}s`;
+      console.log(`Form ${formId}: Remaining time: ${result}`);
+      return result.trim();
+    } catch (error) {
+      console.error(`Form ${formId}: Error calculating remaining time: ${error.message}`);
+      return 'Error';
+    }
+  }
+
+  // Start ticking down remaining times
+  function startTicking() {
+    if (window.tickInterval) {
+      clearInterval(window.tickInterval);
+    }
+
+    window.tickInterval = setInterval(() => {
+      console.log('Ticking update for all forms');
+      Object.keys(formExpirations).forEach(formId => {
+        const { expiresAt, isExpired } = formExpirations[formId];
+        if (isExpired || !expiresAt) {
+          return;
+        }
+
+        const remainingTime = calculateRemainingTime(expiresAt, formId);
+        const timeElement = $(`#time-${formId}`);
+        if (timeElement) {
+          timeElement.textContent = sanitize(remainingTime);
+          console.log(`Form ${formId}: Updated DOM with Expires in: ${remainingTime}`);
+        } else {
+          console.warn(`Form ${formId}: Time element not found in DOM`);
+        }
+
+        if (remainingTime === 'Expired') {
+          formExpirations[formId].isExpired = true;
+          init();
+        }
+      });
+    }, 1000);
+  }
+
+  // Stop polling for subscription status
+  function stopPolling() {
+    if (pollingInterval) {
+      clearInterval(pollingInterval);
+      pollingInterval = null;
+      console.log('Stopped subscription status polling');
+    }
+  }
+
+  // Start polling for subscription status
+  function startPolling() {
+    stopPolling();
+    let pollCount = 0;
+    const maxPolls = 6; // Poll for 30 seconds (6 * 5s)
+    console.log('Starting subscription status polling');
+
+    pollingInterval = setInterval(async () => {
+      pollCount++;
+      console.log(`Polling attempt ${pollCount}/${maxPolls}`);
+      try {
+        const data = await fetchForms();
+        if (data.isSubscribed && data.subscriptionDetails?.billingPeriod === 'monthly') {
+          console.log('Monthly subscription confirmed, stopping polling');
+          stopPolling();
+          init();
+        } else if (pollCount >= maxPolls) {
+          console.log('Max polling attempts reached, stopping polling');
+          stopPolling();
+        }
+      } catch (error) {
+        console.error('Polling error:', error.message);
+        if (pollCount >= maxPolls) {
+          stopPolling();
+        }
+      }
+    }, 5000);
+  }
+
+  // Check token and fetch user info
+  async function checkAuthAndFetchUser() {
+    const token = getToken();
+    if (!token) {
+      console.error('No JWT token found in localStorage');
+      redirectToLogin();
+      return null;
+    }
+
+    try {
+      console.log('Fetching user info from /user');
+      const response = await fetch(`${BASE_URL}/user`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        mode: 'cors',
+        credentials: 'omit'
+      });
+
+      console.log(`User endpoint response status: ${response.status}`);
+      if (!response.ok) {
+        if (response.status === 401) {
+          console.error('Unauthorized: Invalid or expired token');
+          localStorage.removeItem('token');
+          redirectToLogin();
+        }
+        const errorData = await response.json();
+        throw new Error(`Failed to fetch user: ${errorData.error || response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('User data received:', data);
+      if (!data.user || !data.user.email || !data.user.id) {
+        console.error('User data missing or email/id not found:', data);
+        throw new Error('User email or ID not found in response');
+      }
+      userEmail = data.user.email;
+      userId = data.user.id;
+      return data.user;
+    } catch (error) {
+      console.error('Error fetching user info:', error.message);
+      localStorage.removeItem('token');
+      redirectToLogin();
+      return null;
+    }
+  }
+
+  // Fetch forms and subscriptions from backend
+  async function fetchForms() {
+    const token = getToken();
+    if (!token) {
+      console.error('No JWT token found for fetching forms');
+      redirectToLogin();
+      return { formConfigs: {}, submissions: [], templates: {}, isSubscribed: false, subscriptionDetails: null };
+    }
+
+    try {
+      $('#formsGrid').innerHTML = '<div class="loading">Loading forms</div>';
+      $('#formsCount').textContent = 'Loading...';
+
+      console.log('Fetching forms from /get');
+      const response = await fetch(`${BASE_URL}/get`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        mode: 'cors',
+        credentials: 'omit'
+      });
+
+      console.log(`Forms endpoint response status: ${response.status}`);
+      if (!response.ok) {
+        if (response.status === 401) {
+          console.error('Unauthorized: Invalid or expired token for /get');
+          localStorage.removeItem('token');
+          redirectToLogin();
+        }
+        const errorData = await response.json();
+        throw new Error(`Failed to fetch forms: ${errorData.error || response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Forms data received:', data);
+      if (!data || !Array.isArray(data.submissions) || typeof data.formConfigs !== 'object' || typeof data.templates !== 'object') {
+        throw new Error('Invalid response format from /get endpoint');
+      }
+
+      // Store subscription status
+      subscriptionStatus = {
+        isSubscribed: data.isSubscribed || false,
+        billingPeriod: data.subscriptionDetails ? data.subscriptionDetails.billingPeriod : null,
+        endDate: data.subscriptionDetails ? data.subscriptionDetails.endDate : null
+      };
+      console.log('Subscription status:', subscriptionStatus);
+
+      // Update Upgrade button based on subscription status
+      const upgradeBtn = $('#btnUpgrade');
+      if (subscriptionStatus.isSubscribed && subscriptionStatus.billingPeriod === 'monthly') {
+        upgradeBtn.textContent = 'Subscribed';
+        upgradeBtn.disabled = true;
+      } else if (subscriptionStatus.isSubscribed && subscriptionStatus.billingPeriod === 'weekly') {
+        upgradeBtn.textContent = 'Upgrade to Monthly';
+        upgradeBtn.disabled = false;
+      } else {
+        upgradeBtn.textContent = '🚀 Upgrade';
+        upgradeBtn.disabled = false;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Fetch forms error:', error.message);
+      $('#formsGrid').innerHTML = `
+        <div class="error">
+          Error loading forms: ${sanitize(error.message)}<br>
+          <small>Check browser console for details</small><br>
+          <button class="btn" onclick="init()" style="margin-top: 10px;">Try Again</button>
+        </div>
+      `;
+      $('#formsCount').textContent = 'Error';
+      return { formConfigs: {}, submissions: [], templates: {}, isSubscribed: false, subscriptionDetails: null };
+    }
+  }
+
+  // Connect to Telegram
+  async function connectTelegram() {
+    const token = getToken();
+    if (!token || !userId) {
+      console.error('No JWT token or user ID found for Telegram connection');
+      redirectToLogin();
+      return;
+    }
+
+    try {
+      console.log('Fetching Telegram connect link from /api/telegram/connect');
+      const telegramBtn = $('#btnTelegram');
+      telegramBtn.textContent = 'Connecting...';
+      telegramBtn.disabled = true;
+
+      const response = await fetch(`${BASE_URL}/api/telegram/connect`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        mode: 'cors',
+        credentials: 'omit'
+      });
+
+      console.log(`Telegram connect endpoint response status: ${response.status}`);
+      if (!response.ok) {
+        if (response.status === 401) {
+          console.error('Unauthorized: Invalid or expired token for Telegram connect');
+          localStorage.removeItem('token');
+          redirectToLogin();
+        }
+        const errorData = await response.json();
+        throw new Error(`Failed to fetch Telegram link: ${errorData.error || response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Telegram connect response:', data);
+      if (data.telegramLink) {
+        // Convert tg: scheme to HTTPS for broader compatibility
+        let telegramUrl = data.telegramLink;
+        if (telegramUrl.startsWith('tg:')) {
+          const botDomain = telegramUrl.match(/domain=([^&]+)/)?.[1];
+          const startParam = telegramUrl.match(/start=([^&]+)/)?.[1];
+          if (botDomain && startParam) {
+            telegramUrl = `https://t.me/${botDomain}?start=${startParam}`;
+          } else {
+            throw new Error('Invalid Telegram link format');
+          }
+        }
+        console.log(`Opening Telegram link: ${telegramUrl}`);
+        window.location.href = telegramUrl;
+      } else {
+        throw new Error('No Telegram link returned by server');
+      }
+    } catch (error) {
+      console.error('Error connecting to Telegram:', error.message);
+      $('#formsGrid').innerHTML = `
+        <div class="error">
+          Failed to connect to Telegram: ${sanitize(error.message)}<br>
+          Please open Telegram and start a chat with @SmavoBot manually.<br>
+          <small>Check browser console for details</small><br>
+          <button class="btn" onclick="connectTelegram()" style="margin-top: 10px;">Try Again</button>
+        </div>
+      `;
+    } finally {
+      const telegramBtn = $('#btnTelegram');
+      telegramBtn.textContent = '📢 Connect Telegram';
+      telegramBtn.disabled = false;
+    }
+  }
+
+  // Delete form handler
+  async function deleteForm(formId) {
+    if (!confirm(`Are you sure you want to delete form ${formId}?`)) {
+      return;
+    }
+
+    const token = getToken();
+    if (!token) {
+      console.error('No JWT token found for deleting form');
+      redirectToLogin();
+      return;
+    }
+
+    try {
+      console.log(`Deleting form ${formId}`);
+      const response = await fetch(`${BASE_URL}/form/${formId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        mode: 'cors',
+        credentials: 'omit'
+      });
+
+      console.log(`Delete form response status: ${response.status}`);
+      if (!response.ok) {
+        if (response.status === 401) {
+          console.error('Unauthorized: Invalid or expired token for delete');
+          localStorage.removeItem('token');
+          redirectToLogin();
+        }
+        const errorData = await response.json();
+        throw new Error(`Failed to delete form: ${errorData.error || response.statusText}`);
+      }
+
+      const result = await response.json();
+      console.log('Delete form result:', result);
+      delete formExpirations[formId];
+      if (Object.keys(formExpirations).length === 0) {
+        clearInterval(window.tickInterval);
+      }
+      init();
+    } catch (error) {
+      console.error('Error deleting form:', error.message);
+      $('#formsGrid').innerHTML = `
+        <div class="error">
+          Error deleting form: ${sanitize(error.message)}<br>
+          <small>Check browser console for details</small><br>
+          <button class="btn" onclick="init()" style="margin-top: 10px;">Try Again</button>
+        </div>
+      `;
+    }
+  }
+
+  // Delete submission handler
+  async function deleteSubmission(formId, index, formName, submissions) {
+    if (!confirm(`Are you sure you want to delete this submission?`)) {
+      return;
+    }
+
+    const token = getToken();
+    if (!token) {
+      console.error('No JWT token found for deleting submission');
+      redirectToLogin();
+      return;
+    }
+
+    try {
+      console.log(`Deleting submission ${index} for form ${formId}`);
+      const response = await fetch(`${BASE_URL}/form/${formId}/submission/${index}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        mode: 'cors',
+        credentials: 'omit'
+      });
+
+      console.log(`Delete submission response status: ${response.status}`);
+      if (!response.ok) {
+        if (response.status === 401) {
+          console.error('Unauthorized: Invalid or expired token for delete submission');
+          localStorage.removeItem('token');
+          redirectToLogin();
+        }
+        const errorData = await response.json();
+        throw new Error(`Failed to delete submission: ${errorData.error || response.statusText}`);
+      }
+
+      const result = await response.json();
+      console.log('Delete submission result:', result);
+      const updatedData = await fetchForms();
+      showSubmissions(formId, updatedData.submissions, formName);
+      init();
+    } catch (error) {
+      console.error('Error deleting submission:', error.message);
+      $('#modalContent').innerHTML = `
+        <div class="error">
+          Error deleting submission: ${sanitize(error.message)}<br>
+          <small>Check browser console for details</small>
+        </div>
+      `;
+    }
+  }
+
+  // Copy form link to clipboard
+  function copyFormLink(formId, button) {
+    const link = `${BASE_URL}/form/${formId}`;
+    console.log(`Copying form link: ${link}`);
+    navigator.clipboard.writeText(link).then(() => {
+      button.textContent = 'Copied';
+      button.classList.add('btn-copied');
+      setTimeout(() => {
+        button.textContent = 'Copy Link';
+        button.classList.remove('btn-copied');
+      }, 2000);
+    }).catch(err => {
+      console.error('Error copying link:', err.message);
+      alert('Failed to copy link. Please try again.');
+    });
+  }
+
+  // Show submissions in modal
+  function showSubmissions(formId, submissions, formName) {
+    console.log(`Showing submissions for form ${formId}: ${formName}`);
+    const modal = $('#submissionsModal');
+    const modalContent = $('#modalContent');
+    const modalTitle = $('#modalTitle');
+    modalTitle.textContent = `Submissions for ${sanitize(formName)}`;
+
+    const formSubmissions = submissions.filter(s => s.formId === formId);
+
+    if (formSubmissions.length === 0) {
+      modalContent.innerHTML = '<div class="muted">No submissions yet.</div>';
+    } else {
+      modalContent.innerHTML = '';
+      formSubmissions.forEach((submission, index) => {
+        const submissionEl = document.createElement('div');
+        submissionEl.className = 'submission-item';
+        submissionEl.innerHTML = `
+          <div class="submission-meta">
+            <span>Submitted: ${new Date(submission.timestamp).toLocaleString()}</span>
+            <button class="submission-delete-btn" data-form-id="${formId}" data-index="${index}">🗑️</button>
+          </div>
+          <div class="submission-data">
+            ${Object.entries(submission.data).map(([key, value]) =>
+              `<p><strong>${sanitize(key)}:</strong> ${sanitize(value)}</p>`
+            ).join('')}
+          </div>
+        `;
+        modalContent.appendChild(submissionEl);
+      });
+
+      $$('.submission-delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const formId = btn.getAttribute('data-form-id');
+          const index = parseInt(btn.getAttribute('data-index'), 10);
+          deleteSubmission(formId, index, formName, submissions);
+        });
+      });
+    }
+
+    $('#modalOverlay').classList.add('show');
+    modal.classList.add('show');
+  }
+
+  // Initiate payment for selected plan
+  async function initiatePayment(planId, price) {
+    console.log(`Initiating payment for plan: ${planId}, price: ${price}`);
+    const token = getToken();
+    if (!token || !userEmail) {
+      console.error('No JWT token or user email found for payment');
+      redirectToLogin();
+      return;
+    }
+
+    try {
+      // Show loading state
+      const upgradeBtn = $('#btnUpgrade');
+      const modalBtn = $('#subscribeBtn') || $('#upgradeMonthlyBtn');
+      if (modalBtn) modalBtn.textContent = 'Processing...';
+      if (modalBtn) modalBtn.disabled = true;
+      upgradeBtn.textContent = 'Processing...';
+      upgradeBtn.disabled = true;
+
+      console.log('Sending payment request to /api/subscription/initiate-payment');
+      const response = await fetch(`${BASE_URL}/api/subscription/initiate-payment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          planId,
+          email: userEmail,
+          price
+        }),
+        mode: 'cors',
+        credentials: 'omit'
+      });
+
+      console.log(`Payment endpoint response status: ${response.status}`);
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        if (response.status === 401) {
+          console.error('Unauthorized: Invalid or expired token for payment');
+          localStorage.removeItem('token');
+          redirectToLogin();
+          return;
+        }
+        throw new Error(`Payment initiation failed: ${errorData.error || response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Payment initiation response:', data);
+      if (data.authorizationUrl) {
+        console.log(`Redirecting to Paystack: ${data.authorizationUrl}`);
+        // Start polling for subscription status after redirect
+        startPolling();
+        window.location.href = data.authorizationUrl;
+      } else {
+        throw new Error('No authorization URL returned by Paystack');
+      }
+    } catch (error) {
+      console.error('Error initiating payment:', error.message);
+      $('#plansModal .modal-content').innerHTML = `
+        <div class="error">
+          Failed to initiate payment: ${sanitize(error.message)}<br>
+          <small>Check browser console for details</small><br>
+          <button class="btn" onclick="showPlansModal()" style="margin-top: 10px;">Try Again</button>
+        </div>
+      `;
+    } finally {
+      // Restore button state
+      const upgradeBtn = $('#btnUpgrade');
+      const modalBtn = $('#subscribeBtn') || $('#upgradeMonthlyBtn');
+      if (modalBtn) modalBtn.textContent = modalBtn.id === 'subscribeBtn' ? 'Subscribe' : 'Upgrade to Monthly';
+      if (modalBtn) modalBtn.disabled = false;
+      upgradeBtn.textContent = subscriptionStatus.isSubscribed && subscriptionStatus.billingPeriod === 'monthly' ? 'Subscribed' : subscriptionStatus.isSubscribed ? 'Upgrade to Monthly' : '🚀 Upgrade';
+      upgradeBtn.disabled = subscriptionStatus.isSubscribed && subscriptionStatus.billingPeriod === 'monthly';
+    }
+  }
+
+  // Show plans modal with subscription status
+  function showPlansModal() {
+    console.log('Opening plans modal with subscription status:', subscriptionStatus);
+    const modal = $('#plansModal');
+    const modalContent = $('#plansModal .modal-content');
+
+    if (subscriptionStatus.isSubscribed && subscriptionStatus.billingPeriod === 'monthly') {
+      // Monthly subscribed: Show only Premium Monthly as current plan
+      modalContent.innerHTML = `
+        <div class="plans">
+          <div class="plan-card premium">
+            <h2>Premium Plan (Monthly)</h2>
+            <p class="sub">Your current plan until ${new Date(subscriptionStatus.endDate).toLocaleDateString()}</p>
+            <ul>
+              <li>Unlimited live span</li>
+              <li>Unlimited forms</li>
+              <li>Unlimited links</li>
+              <li>Unlimited hours</li>
+              <li>Priority support</li>
+            </ul>
+            <div class="price">₦3,000 / month</div>
+            <button class="btn" disabled>Current Plan</button>
+          </div>
+        </div>
+      `;
+    } else if (subscriptionStatus.isSubscribed && subscriptionStatus.billingPeriod === 'weekly') {
+      // Weekly subscribed: Show Free (disabled), Weekly (current), Monthly (available)
+      modalContent.innerHTML = `
+        <div class="plans">
+          <div class="plan-card free">
+            <h2>Free Plan</h2>
+            <p class="sub">Basic features</p>
+            <ul>
+              <li>Forms expire in 1 hour</li>
+              <li>5 forms per day</li>
+              <li>150 links per month</li>
+              <li>155 hours in a month</li>
+            </ul>
+            <div class="price">$0</div>
+            <button class="btn" disabled>Not Available</button>
+          </div>
+          <div class="plan-card premium">
+            <h2>Premium Plan (Weekly)</h2>
+            <p class="sub">Your current plan until ${new Date(subscriptionStatus.endDate).toLocaleDateString()}</p>
+            <ul>
+              <li>Unlimited live span</li>
+              <li>Unlimited forms</li>
+              <li>Unlimited links</li>
+              <li>Unlimited hours</li>
+              <li>Priority support</li>
+            </ul>
+            <div class="price">₦800 / week</div>
+            <button class="btn" disabled>Current Plan</button>
+          </div>
+          <div class="plan-card premium">
+            <h2>Premium Plan (Monthly)</h2>
+            <p class="sub">Upgrade for longer billing</p>
+            <ul>
+              <li>Unlimited live span</li>
+              <li>Unlimited forms</li>
+              <li>Unlimited links</li>
+              <li>Unlimited hours</li>
+              <li>Priority support</li>
+            </ul>
+            <div class="price">₦3,000 / month</div>
+            <button class="btn" id="upgradeMonthlyBtn">Upgrade to Monthly</button>
+          </div>
+        </div>
+      `;
+      $('#upgradeMonthlyBtn').addEventListener('click', () => {
+        initiatePayment('premium-monthly', 300000); // Price in kobo
+      });
+    } else {
+      // Unsubscribed: Show Free (current) and Premium with toggle
+      modalContent.innerHTML = `
+        <div class="plans">
+          <div class="plan-card free">
+            <h2>Free Plan</h2>
+            <p class="sub">Your current plan</p>
+            <ul>
+              <li>Forms expire in 1 hour</li>
+              <li>5 forms per day</li>
+              <li>150 links per month</li>
+              <li>155 hours in a month</li>
+            </ul>
+            <div class="price">$0</div>
+            <button class="btn" disabled>Current Plan</button>
+          </div>
+          <div class="plan-card premium">
+            <h2>Premium Plan</h2>
+            <p class="sub">Unlock full power</p>
+            <div class="toggle">
+              <button id="weeklyBtn" class="active">Weekly</button>
+              <button id="monthlyBtn">Monthly</button>
+            </div>
+            <ul>
+              <li>Unlimited live span</li>
+              <li>Unlimited forms</li>
+              <li>Unlimited links</li>
+              <li>Unlimited hours</li>
+              <li>Priority support</li>
+            </ul>
+            <div class="price" id="priceText">₦800 / week</div>
+            <button class="btn" id="subscribeBtn">Subscribe</button>
+          </div>
+        </div>
+      `;
+      let selectedPlan = 'premium-weekly';
+      let selectedPrice = 80000; // Price in kobo
+      $('#weeklyBtn').addEventListener('click', () => {
+        console.log('Selected weekly plan');
+        $('#weeklyBtn').classList.add('active');
+        $('#monthlyBtn').classList.remove('active');
+        $('#priceText').textContent = '₦800 / week';
+        selectedPlan = 'premium-weekly';
+        selectedPrice = 80000;
+      });
+      $('#monthlyBtn').addEventListener('click', () => {
+        console.log('Selected monthly plan');
+        $('#monthlyBtn').classList.add('active');
+        $('#weeklyBtn').classList.remove('active');
+        $('#priceText').textContent = '₦3,000 / month';
+        selectedPlan = 'premium-monthly';
+        selectedPrice = 300000;
+      });
+      $('#subscribeBtn').addEventListener('click', () => {
+        initiatePayment(selectedPlan, selectedPrice);
+      });
+    }
+
+    $('#modalOverlay').classList.add('show');
+    modal.classList.add('show');
+  }
+
+  // Close modal
+  function closeModal() {
+    console.log('Closing modal');
+    $('#modalOverlay').classList.remove('show');
+    $('#submissionsModal').classList.remove('show');
+    $('#plansModal').classList.remove('show');
+  }
+
+  // Render forms
+  function renderForms(formConfigs, submissions, templates, user) {
+    console.log('Rendering forms with formConfigs:', JSON.stringify(formConfigs, null, 2));
+    const grid = $('#formsGrid');
+    grid.innerHTML = '';
+    const formList = Object.entries(formConfigs);
+
+    formExpirations = {};
+
+    formList.sort((a, b) => {
+      const dateA = new Date(a[1].createdAt || 0);
+      const dateB = new Date(b[1].createdAt || 0);
+      return dateB - dateA;
+    });
+
+    if (formList.length === 0) {
+      grid.innerHTML = '<div class="muted">No forms yet. Create a form to get started.</div>';
+      $('#formsCount').textContent = `${formList.length} item${formList.length === 1 ? '' : 's'}`;
+      console.log('No forms to render');
+      clearInterval(window.tickInterval);
+    } else {
+      formList.forEach(([formId, config]) => {
+        console.log(`Rendering form ${formId}:`, JSON.stringify(config, null, 2));
+        const templateId = config.template || 'sign-in';
+        const formName = config.headerText || templates[templateId]?.name || `Form ${formId}`;
+        const submissionCount = submissions.filter(s => s.formId === formId).length;
+        const createdAt = config.createdAt ? new Date(config.createdAt).toLocaleDateString() : new Date().toLocaleDateString();
+        const isExpired = config.isExpired || (config.expiresAt && new Date(config.expiresAt).getTime() <= Date.now());
+        const hasExpiry = !!config.expiresAt && !subscriptionStatus.isSubscribed;
+        const remainingTime = isExpired ? 'Expired' : calculateRemainingTime(config.expiresAt, formId);
+
+        console.log(`Form ${formId}: hasExpiry=${hasExpiry}, isExpired=${isExpired}, expiresAt=${config.expiresAt}, remainingTime=${remainingTime}`);
+
+        formExpirations[formId] = {
+          expiresAt: config.expiresAt,
+          isExpired: isExpired
+        };
+
+        let expiryContent = '';
+        if (hasExpiry) {
+          expiryContent = `Expires in: <span class="expiry-info" id="time-${formId}">${sanitize(remainingTime)}</span>`;
+          expiryContent += `<a class="upgrade-message" href="#" onclick="showPlansModal()">Unlock unlimited forms & lifetime links by upgrading.</a>`;
+        }
+
+        const el = document.createElement('div');
+        el.className = 'form-card';
+        el.innerHTML = `
+          <div class="form-row">
+            <div class="form-name">${sanitize(formName)}</div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <div class="chip">${sanitize(config.theme === 'dark' ? 'Dark' : 'Light')}</div>
+              <button class="delete-btn" data-id="${formId}">🗑️</button>
+            </div>
+          </div>
+          <div class="form-meta">
+            Type: ${sanitize(templateId)} • Created: ${createdAt} • Submissions: ${fmt(submissionCount)} ${hasExpiry ? ` • ${expiryContent}` : ''}
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-edit" data-id="${formId}">Edit</button>
+            <button class="btn btn-copy-link" data-id="${formId}">Copy Link</button>
+            <button class="btn btn-submissions" data-id="${formId}">Submissions</button>
+            <button class="btn btn-view" data-id="${formId}">View</button>
+          </div>
+        `;
+        grid.appendChild(el);
+        console.log(`Form ${formId}: Added to DOM with Expires in: ${remainingTime}`);
+      });
+
+      $('#formsCount').textContent = `${formList.length} item${formList.length === 1 ? '' : 's'}`;
+
+      $$('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const formId = btn.getAttribute('data-id');
+          deleteForm(formId);
+        });
+      });
+
+      $$('.btn-copy-link').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const formId = btn.getAttribute('data-id');
+          copyFormLink(formId, btn);
+        });
+      });
+
+      $$('.btn-submissions').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const formId = btn.getAttribute('data-id');
+          const formName = formConfigs[formId].headerText || templates[formId.split('-')[0]]?.name || `Form ${formId}`;
+          showSubmissions(formId, submissions, formName);
+        });
+      });
+
+      $$('.btn-view').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const formId = btn.getAttribute('data-id');
+          window.open(`${BASE_URL}/form/${formId}`, '_blank');
+        });
+      });
+
+      $$('.btn-edit').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const formId = btn.getAttribute('data-id');
+          window.location.href = `editor.html?formId=${formId}`;
+        });
+      });
+
+      if (user && user.username) {
+        $('.h1 span').textContent = sanitize(user.username);
+      } else {
+        $('.h1 span').textContent = 'User';
+      }
+
+      startTicking();
+    }
+  }
+
+  // Initialize
+  async function init() {
+    console.log('Initializing dashboard');
+    const user = await checkAuthAndFetchUser();
+    if (!user) return;
+
+    try {
+      const { formConfigs, submissions, templates } = await fetchForms();
+      renderForms(formConfigs, submissions, templates, user);
+    } catch (error) {
+      console.error('Initialization error:', error.message);
+      $('#formsGrid').innerHTML = `
+        <div class="error">
+          Failed to initialize: ${sanitize(error.message)}
+        </div>
+      `;
+      clearInterval(window.tickInterval);
+    }
+  }
+
+  // Event listeners
+  $('#btnNewForm').addEventListener('click', () => {
+    console.log('Navigating to editor for new form');
+    window.location.href = 'editor.html';
+  });
+
+  $('#btnUpgrade').addEventListener('click', () => {
+    if (!subscriptionStatus.isSubscribed || subscriptionStatus.billingPeriod === 'weekly') {
+      showPlansModal();
+    }
+  });
+
+  $('#btnTelegram').addEventListener('click', () => {
+    console.log('Initiating Telegram connection');
+    connectTelegram();
+  });
+
+  $('#modalClose').addEventListener('click', closeModal);
+  $('#plansModalClose').addEventListener('click', closeModal);
+  $('#modalOverlay').addEventListener('click', closeModal);
+
+  $('#btnLogout').addEventListener('click', () => {
+    console.log('Logging out');
+    localStorage.removeItem('token');
+    clearInterval(window.tickInterval);
+    stopPolling();
+    redirectToLogin();
+  });
+
+  // Check for payment redirect and refresh status
+  document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('trxref') || urlParams.get('reference')) {
+      console.log('Detected payment redirect, refreshing subscription status');
+      startPolling();
+    }
+    init();
+  });
+
+  // Auto-refresh every 5 minutes to sync with server
+  setInterval(init, 300000);
+</script>
+</body>
+</html>
