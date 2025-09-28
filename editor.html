@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Form Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 40px 20px 20px;
+    box-sizing: border-box;
+    transition: background 0.3s ease;
+    position: relative;
+  }
+
+  body.dark-mode {
+    background: #1a1f2e;
+  }
+
+  body.saved-mode {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 40px 20px 20px;
+  }
+
+  body.dark-mode.saved-mode {
+    background: #1a1f2e;
+  }
+
+  .form-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #000000;
+    text-align: center;
+    margin: 0 0 20px;
+    background: linear-gradient(45deg, #00b7ff, #0078ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  body.dark-mode .form-title {
+    color: #f8f9fa;
+  }
+
+  body.saved-mode .form-title {
+    display: none;
+  }
+
+  .template-instruction {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333333;
+    text-align: center;
+    margin: 0 0 10px;
+    padding: 8px 16px;
+    background: linear-gradient(45deg, #00b7ff, #0078ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    max-width: 400px;
+    line-height: 1.4;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+
+  body.dark-mode .template-instruction {
+    color: #f8f9fa;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  body.saved-mode .template-instruction {
+    display: none;
+  }
+
+  .template-selector-container {
+    width: 100%;
+    max-width: 260px;
+    margin-bottom: 20px;
+  }
+
+  body.saved-mode .template-selector-container {
+    display: none;
+  }
+
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    width: calc(100% - 8px);
+    flex-shrink: 0;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .theme-toggle label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #555555;
+    cursor: pointer;
+  }
+
+  body.dark-mode .theme-toggle label {
+    color: #d1d5db;
+  }
+
+  .theme-toggle input[type="checkbox"] {
+    display: none;
+  }
+
+  .theme-toggle .switch {
+    position: relative;
+    width: 40px;
+    height: 20px;
+    background: #ddd;
+    border-radius: 20px;
+    transition: background 0.3s ease;
+    cursor: pointer;
+  }
+
+  .theme-toggle .switch::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #ffffff;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+  }
+
+  .theme-toggle input:checked + .switch {
+    background: #00b7ff;
+  }
+
+  .theme-toggle input:checked + .switch::before {
+    transform: translateX(20px);
+  }
+
+  #template-selector {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: #ffffff;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  body.dark-mode #template-selector {
+    background: #2f3b5a;
+    color: #f8f9fa;
+    box-shadow: 0 0 0 2px #6b7280;
+  }
+
+  #template-selector:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 183, 255, 0.3);
+  }
+
+  .content-container {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 660px;
+    transition: opacity 0.3s ease;
+  }
+
+  body.saved-mode .content-container {
+    display: none;
+    opacity: 0;
+  }
+
+  .login-container {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    min-height: 300px;
+    height: auto;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+  }
+
+  body.dark-mode .login-container {
+    background: #2f3b5a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  body.saved-mode .login-container {
+    margin: 0 auto;
+    position: relative;
+    top: 0;
+    transform: translateY(0);
+    animation: fadeIn 0.5s ease;
+  }
+
+  .login-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  body.dark-mode .login-container:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .login-container h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #000000;
+  }
+
+  body.dark-mode .login-container h2 {
+    color: #ffffff;
+  }
+
+  .login-container h2 span {
+    color: inherit;
+  }
+
+  .login-container p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #555555;
+    font-weight: 400;
+  }
+
+  body.dark-mode .login-container p {
+    color: #d1d5db;
+  }
+
+  .login-container span {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+
+  .login-container span.space {
+    cursor: default;
+    margin-right: 4px;
+    letter-spacing: 0;
+    width: 4px;
+    display: inline-block;
+  }
+
+  .login-container span.selected {
+    box-shadow: 0 0 0 2px #00b7ff;
+    border-radius: 50%;
+    padding: 1px;
+    box-sizing: border-box;
+  }
+
+  body.saved-mode .login-container span {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  body.saved-mode .login-container h2,
+  body.saved-mode .login-container p {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .login-container input, .login-container button {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+  }
+
+  .login-container input {
+    border: none;
+    box-shadow: 0 0 0 2px #000000;
+    background: #f8f9fa;
+  }
+
+  body.dark-mode .login-container input {
+    box-shadow: 0 0 0 2px #ffffff;
+    background: #3b4a6b;
+    color: #f8f9fa;
+  }
+
+  body.dark-mode .login-container input::placeholder {
+    color: #b0b8cc;
+    opacity: 1;
+  }
+
+  .login-container input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 183, 255, 0.3);
+    background: #ffffff;
+  }
+
+  body.dark-mode .login-container input:focus {
+    background: #3b4a6b;
+  }
+
+  .login-container input:not(:placeholder-shown) {
+    background: #ffffff;
+  }
+
+  body.dark-mode .login-container input:not(:placeholder-shown) {
+    background: #3b4a6b;
+  }
+
+  .login-container button {
+    background: linear-gradient(45deg, #00b7ff, #0078ff);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 183, 255, 0.3);
+    padding: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .login-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 183, 255, 0.5);
+  }
+
+  .customizer {
+    background: #ffffff;
+    padding: 20px 20px 20px 12px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 260px;
+    max-height: 260px;
+    overflow-y: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+  }
+
+  body.dark-mode .customizer {
+    background: #2f3b5a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    scrollbar-color: #6b7280 #2f3b5a;
+  }
+
+  .customizer.hidden {
+    display: none;
+    opacity: 0;
+  }
+
+  .customizer:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  body.dark-mode .customizer:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .customizer h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 12px;
+  }
+
+  body.dark-mode .customizer h3 {
+    color: #f8f9fa;
+  }
+
+  .customizer-section {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+    margin-right: 8px;
+  }
+
+  body.dark-mode .customizer-section {
+    border-bottom-color: #555;
+  }
+
+  .customizer-section:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .customizer h4 {
+    color: #333333;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  body.dark-mode .customizer h4 {
+    color: #f8f9fa;
+  }
+
+  .customizer label {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #555555;
+  }
+
+  body.dark-mode .customizer label {
+    color: #d1d5db;
+  }
+
+  .customizer input, .customizer select {
+    margin-top: 4px;
+    width: calc(100% - 8px);
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 0 0 2px #ddd;
+    font-size: 0.85rem;
+    background: #f8f9fa;
+    color: #333333;
+    transition: all 0.2s ease;
+  }
+
+  body.dark-mode .customizer input, body.dark-mode .customizer select {
+    background: #3b4a6b;
+    box-shadow: 0 0 0 2px #6b7280;
+    color: #f8f9fa;
+  }
+
+  .customizer input::placeholder, .customizer select::placeholder {
+    color: #999999;
+    opacity: 1;
+  }
+
+  body.dark-mode .customizer input::placeholder, body.dark-mode .customizer select::placeholder {
+    color: #b0b8cc;
+    opacity: 1;
+  }
+
+  .customizer input:focus, .customizer select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 183, 255, 0.3);
+    background: #ffffff;
+  }
+
+  body.dark-mode .customizer input:focus, body.dark-mode .customizer select:focus {
+    background: #3b4a6b;
+  }
+
+  .customizer input[type="radio"] {
+    width: auto;
+    margin-right: 8px;
+    transform: scale(1.1);
+    box-shadow: none;
+  }
+
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .color-boxes {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    width: calc(100% - 8px);
+    flex-wrap: wrap;
+  }
+
+  .color-box {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .color-box[data-color="#FFFFFF"] {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), inset 0 0 0 1px #ccc;
+  }
+
+  body.dark-mode .color-box[data-color="#FFFFFF"] {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 0 0 1px #555;
+  }
+
+  .color-box[data-color="#000000"] {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), inset 0 0 0 1px #ccc;
+  }
+
+  body.dark-mode .color-box[data-color="#000000"] {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 0 0 1px #555;
+  }
+
+  .color-box:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 183, 255, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  body.dark-mode .color-box:hover {
+    box-shadow: 0 0 10px rgba(0, 183, 255, 0.4), 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .instructions {
+    font-size: 0.75rem;
+    color: #777777;
+    margin-top: 6px;
+    line-height: 1.3;
+  }
+
+  body.dark-mode .instructions {
+    color: #b0b8cc;
+  }
+
+  .color-button, .add-field-button, .remove-field-button {
+    width: calc(100% - 8px);
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .color-button, .add-field-button {
+    background: linear-gradient(45deg, #00b7ff, #0078ff);
+    color: white;
+  }
+
+  .color-button:hover, .add-field-button:hover {
+    background: linear-gradient(45deg, #0078ff, #005bb5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 183, 255, 0.4);
+  }
+
+  .remove-field-button {
+    background: linear-gradient(45deg, #DB4437, #B71C1C);
+    color: white;
+  }
+
+  .remove-field-button:hover {
+    background: linear-gradient(45deg, #B71C1C, #8B0000);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(219, 68, 55, 0.4);
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+    width: 260px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  body.saved-mode .button-container {
+    display: none;
+    opacity: 0;
+  }
+
+  .save-button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, #00b7ff, #0078ff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .save-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 183, 255, 0.4);
+    background: linear-gradient(45deg, #0078ff, #005bb5);
+  }
+
+  .save-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+  }
+
+  .save-button:hover::after {
+    width: 200px;
+    height: 200px;
+  }
+
+  .close-button {
+    display: none;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    background: #ffffff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #555555;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  body.dark-mode .close-button {
+    background: #2f3b5a;
+    color: #f8f9fa;
+  }
+
+  body.saved-mode .close-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .close-button:hover {
+    color: #DB4437;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%) scale(0.8);
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    text-align: center;
+    max-width: 300px;
+    width: 90%;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border: 1px solid rgba(0, 183, 255, 0.1);
+  }
+
+  body.dark-mode .popup {
+    background: #2f3b5a;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    border-color: rgba(0, 183, 255, 0.2);
+  }
+
+  .popup.show {
+    display: block;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+
+  .popup h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 12px;
+  }
+
+  body.dark-mode .popup h4 {
+    color: #f8f9fa;
+  }
+
+  .popup .color-boxes {
+    justify-content: center;
+  }
+
+  .popup p {
+    font-size: 0.85rem;
+    color: #555555;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  body.dark-mode .popup p {
+    color: #d1d5db;
+  }
+
+  .popup-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 0.85rem;
+    color: #555555;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  body.dark-mode .popup-close {
+    color: #f8f9fa;
+  }
+
+  .popup-close:hover {
+    color: #00b7ff;
+  }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    backdrop-filter: blur(2px);
+    transition: opacity 0.3s ease;
+  }
+
+  .overlay.show {
+    display: block;
+    opacity: 1;
+  }
+
+  .loading {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: #1f2937;
+    color: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 1001;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+  }
+
+  .loading.show {
+    display: flex;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  body.dark-mode .loading {
+    background: #111827;
+    color: #f8f9fa;
+  }
+
+  .loading .spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #ffffff;
+    border-top: 3px solid #00b7ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  #url-popup {
+    max-width: 320px;
+    padding: 24px;
+    background: linear-gradient(145deg, #ffffff, #f1f5f9);
+  }
+
+  body.dark-mode #url-popup {
+    background: linear-gradient(145deg, #2f3b5a, #1e2a44);
+  }
+
+  #url-popup p#url-text {
+    font-size: 0.85rem;
+    color: #333333;
+    word-break: break-all;
+    margin: 12px 0;
+    background: #f8f9fa;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+  }
+
+  body.dark-mode #url-popup p#url-text {
+    color: #f8f9fa;
+    background: #3b4a6b;
+    border-color: #4b5e8e;
+  }
+
+  .copy-button, .preview-button {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .copy-button {
+    background: linear-gradient(45deg, #00b7ff, #0078ff);
+    color: white;
+    box-shadow: 0 2px 6px rgba(0, 183, 255, 0.3);
+  }
+
+  .copy-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 183, 255, 0.4);
+    background: linear-gradient(45deg, #0078ff, #005bb5);
+  }
+
+  .copy-button.copied {
+    background: linear-gradient(45deg, #10b981, #047857);
+  }
+
+  .copy-button.copied::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 1.2rem;
+    color: white;
+    animation: checkmark 0.3s ease forwards;
+  }
+
+  .copy-button.copied span {
+    opacity: 0;
+  }
+
+  .preview-button {
+    background: linear-gradient(45deg, #00b7ff, #0078ff);
+    color: white;
+    box-shadow: 0 2px 6px rgba(0, 183, 255, 0.3);
+  }
+
+  .preview-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 183, 255, 0.4);
+    background: linear-gradient(45deg, #0078ff, #005bb5);
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes checkmark {
+    0% { transform: translate(-50%, -50%) scale(0); }
+    50% { transform: translate(-50%, -50%) scale(1.2); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+  }
+
+  @media (max-width: 768px) {
+    body {
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 30px 16px 16px;
+    }
+
+    body.saved-mode {
+      padding: 30px 16px 16px;
+    }
+
+    .form-title {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+    }
+
+    .template-instruction {
+      font-size: 0.9rem;
+      padding: 6px 12px;
+      max-width: 300px;
+    }
+
+    .template-selector-container {
+      max-width: 300px;
+    }
+
+    .content-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .login-container, .customizer, .button-container {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .login-container {
+      height: auto;
+      min-height: 300px;
+      padding: 16px;
+    }
+
+    .login-container h2 {
+      font-size: 1.6rem;
+    }
+
+    .login-container input, .login-container button {
+      padding: 12px;
+      font-size: 0.9rem;
+    }
+
+    .login-container button {
+      padding: 14px;
+    }
+
+    .customizer {
+      max-height: 260px;
+      padding: 16px 16px 16px 12px;
+    }
+
+    .button-container {
+      width: 100%;
+      max-width: 300px;
+      margin-top: 12px;
+    }
+
+    .save-button {
+      padding: 12px;
+      font-size: 0.9rem;
+    }
+
+    .close-button {
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      font-size: 1.2rem;
+    }
+
+    .popup {
+      width: 80%;
+      max-width: 280px;
+      padding: 16px;
+    }
+
+    .loading {
+      font-size: 0.85rem;
+      padding: 12px 20px;
+    }
+
+    #url-popup {
+      padding: 20px;
+    }
+
+    #url-popup p#url-text {
+      font-size: 0.8rem;
+    }
+
+    .copy-button, .preview-button {
+      font-size: 0.85rem;
+      padding: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .form-title {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    .template-instruction {
+      font-size: 0.85rem;
+      padding: 6px 10px;
+      max-width: 280px;
+    }
+
+    .login-container h2 {
+      font-size: 1.4rem;
+    }
+
+    .login-container p {
+      font-size: 0.8rem;
+    }
+
+    .login-container input, .login-container button {
+      font-size: 0.85rem;
+      padding: 10px;
+    }
+
+    .login-container button {
+      padding: 12px;
+    }
+
+    .customizer h3 {
+      font-size: 0.9rem;
+    }
+
+    .customizer label {
+      font-size: 0.75rem;
+    }
+
+    .customizer input, .customizer select {
+      font-size: 0.8rem;
+      padding: 8px;
+    }
+
+    .color-button, .add-field-button, .remove-field-button {
+      font-size: 0.8rem;
+      padding: 8px;
+    }
+
+    .save-button {
+      font-size: 0.85rem;
+      padding: 10px;
+    }
+
+    .login-container, .customizer, .button-container {
+      max-width: 280px;
+    }
+
+    .theme-toggle {
+      gap: 6px;
+    }
+
+    .theme-toggle label {
+      font-size: 0.75rem;
+    }
+
+    .theme-toggle .switch {
+      width: 36px;
+      height: 18px;
+    }
+
+    .theme-toggle .switch::before {
+      width: 14px;
+      height: 14px;
+      top: 2px;
+      left: 2px;
+    }
+
+    .theme-toggle input:checked + .switch::before {
+      transform: translateX(18px);
+    }
+
+    .loading {
+      font-size: 0.8rem;
+      padding: 10px 16px;
+    }
+
+    #url-popup {
+      max-width: 260px;
+    }
+
+    #url-popup p#url-text {
+      font-size: 0.75rem;
+    }
+
+    .copy-button, .preview-button {
+      font-size: 0.8rem;
+      padding: 8px;
+    }
+  }
+</style>
+</head>
+<body>
+  <h1 class="form-title">Sign In Form</h1>
+  <p class="template-instruction">Select any template to customize your form</p>
+  <div class="template-selector-container">
+    <select id="template-selector" aria-label="Select form template">
+      <option value="sign-in">Sign In</option>
+      <option value="contact">Contact</option>
+      <option value="payment-checkout">Payment Checkout</option>
+    </select>
+  </div>
+  <div class="login-container">
+    <h2 id="login-header">my form</h2>
+    <p id="login-subheader">fill the form</p>
+    <div id="input-fields">
+      <!-- Fields will be dynamically loaded -->
+    </div>
+    <button id="login-button">Sign In</button>
+  </div>
+  <div class="content-container">
+    <div class="customizer">
+      <h3>Customize Form Template</h3>
+      <div class="customizer-section">
+        <h4>Theme</h4>
+        <div class="theme-toggle">
+          <input type="checkbox" id="theme-toggle" aria-label="Toggle dark mode" />
+          <label for="theme-toggle">Dark Mode</label>
+          <span class="switch"></span>
+        </div>
+      </div>
+      <div class="customizer-section">
+        <h4>Branding</h4>
+        <label>Header Text:</label>
+        <input type="text" id="custom-header" placeholder="my form" aria-label="Header text">
+        <label>Header Text Color:</label>
+        <div class="color-boxes" id="header-colors">
+          <div class="color-box" style="background-color: #4285F4;" data-color="#4285F4"></div>
+          <div class="color-box" style="background-color: #DB4437;" data-color="#DB4437"></div>
+          <div class="color-box" style="background-color: #f59e0b;" data-color="#f59e0b"></div>
+          <div class="color-box" style="background-color: #10b981;" data-color="#10b981"></div>
+          <div class="color-box" style="background-color: #1e3a8a;" data-color="#1e3a8a"></div>
+          <div class="color-box" style="background-color: #ffffff;" data-color="#ffffff"></div>
+          <div class="color-box" style="background-color: #000000;" data-color="#000000"></div>
+        </div>
+        <p class="instructions">Tap a color to apply to the whole header, or select a letter in the header text (blue circle appears) and tap a color to apply to that letter only.</p>
+        <label>Subheader Text:</label>
+        <input type="text" id="custom-subheader" placeholder="fill the form" aria-label="Subheader text">
+        <label>Subheader Text Color:</label>
+        <div class="color-boxes" id="subheader-colors">
+          <div class="color-box" style="background-color: #4285F4;" data-color="#4285F4"></div>
+          <div class="color-box" style="background-color: #DB4437;" data-color="#DB4437"></div>
+          <div class="color-box" style="background-color: #f59e0b;" data-color="#f59e0b"></div>
+          <div class="color-box" style="background-color: #10b981;" data-color="#10b981"></div>
+          <div class="color-box" style="background-color: #1e3a8a;" data-color="#1e3a8a"></div>
+          <div class="color-box" style="background-color: #ffffff;" data-color="#ffffff"></div>
+          <div class="color-box" style="background-color: #000000;" data-color="#000000"></div>
+        </div>
+      </div>
+      <div class="customizer-section">
+        <h4>Edit Fields</h4>
+        <div id="placeholder-inputs">
+          <!-- Dynamic field placeholders -->
+        </div>
+        <button class="add-field-button" id="add-field-button" aria-label="Add new field">Add Field</button>
+        <label>Input Border Color:</label>
+        <button class="color-button" id="border-color-button" aria-label="Choose input border color">Choose Border Color</button>
+      </div>
+      <div class="customizer-section">
+        <h4>Button</h4>
+        <label>Button Text:</label>
+        <input type="text" id="button-text" placeholder="Sign In" aria-label="Button text">
+        <label>Button Color:</label>
+        <button class="color-button" id="button-color-button" aria-label="Choose button color">Choose Button Color</button>
+        <label>Button Action:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="button-action" value="url" checked aria-label="Link to URL"> Link to URL</label>
+          <input type="text" id="button-url" placeholder="Enter URL (e.g., www.example.com)" aria-label="Button URL">
+          <label><input type="radio" name="button-action" value="message" aria-label="Show message popup"> Show Message Pop-Up</label>
+          <input type="text" id="button-message" placeholder="Enter message" disabled aria-label="Button message">
+        </div>
+      </div>
+    </div>
+    <div class="button-container">
+      <button class="save-button" id="save-button" aria-label="Save form"><span id="save-button-text">Save</span></button>
+    </div>
+  </div>
+  <button class="close-button" id="close-button" aria-label="Close created form">&times;</button>
+  <div class="overlay" id="color-overlay"></div>
+  <div class="popup" id="color-popup">
+    <button class="popup-close" id="popup-close" aria-label="Close color picker">&times;</button>
+    <h4 id="popup-title">Select Color</h4>
+    <div class="color-boxes" id="color-boxes">
+      <div class="color-box" style="background-color: #4285F4;" data-color="#4285F4"></div>
+      <div class="color-box" style="background-color: #DB4437;" data-color="#DB4437"></div>
+      <div class="color-box" style="background-color: #f59e0b;" data-color="#f59e0b"></div>
+      <div class="color-box" style="background-color: #10b981;" data-color="#10b981"></div>
+      <div class="color-box" style="background-color: #1e3a8a;" data-color="#1e3a8a"></div>
+      <div class="color-box" style="background-color: #ffffff;" data-color="#ffffff"></div>
+      <div class="color-box" style="background-color: #000000;" data-color="#000000"></div>
+    </div>
+  </div>
+  <div class="overlay" id="message-overlay"></div>
+  <div class="popup" id="message-popup" role="alertdialog" aria-labelledby="message-popup-title">
+    <button class="popup-close" id="message-popup-close" aria-label="Close message popup">&times;</button>
+    <h4 id="message-popup-title">Message</h4>
+    <p id="message-text"></p>
+  </div>
+  <div class="overlay" id="url-overlay"></div>
+  <div class="popup" id="url-popup" role="dialog" aria-labelledby="url-popup-title">
+    <button class="popup-close" id="url-popup-close" aria-label="Close shareable link popup">&times;</button>
+    <h4 id="url-popup-title">Share Your Form</h4>
+    <p id="url-text" aria-live="polite">Your link will appear here</p>
+    <div style="display: flex; gap: 8px;">
+      <button class="copy-button" id="copy-button" aria-label="Copy shareable link"><span>Copy Link</span></button>
+      <button class="preview-button" id="preview-button" aria-label="Preview form">Preview Form</button>
+    </div>
+  </div>
+  <div class="loading" id="loading-indicator" role="alert" aria-live="assertive">
+    <div class="spinner"></div>
+    <span>Saving Form...</span>
+  </div>
+
+<script>
+  // Utilities
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => document.querySelectorAll(sel);
+
+  // Base URL for backend
+  const BASE_URL = 'https://plexzora.onrender.com';
+
+  // Template definitions
+  const templates = {
+    "sign-in": {
+      name: "Sign In Form",
+      fields: [
+        { id: "email", placeholder: "Email", type: "email", validation: { required: true, regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, errorMessage: "Please enter a valid email address." } },
+        { id: "password", placeholder: "Password", type: "password", validation: { required: true } }
+      ],
+      buttonText: "Sign In",
+      buttonAction: "url",
+      buttonUrl: "",
+      buttonMessage: ""
+    },
+    "contact": {
+      name: "Contact Form",
+      fields: [
+        { id: "phone", placeholder: "Phone Number", type: "tel", validation: { required: true } },
+        { id: "email", placeholder: "Email", type: "email", validation: { required: true, regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, errorMessage: "Please enter a valid email address." } }
+      ],
+      buttonText: "Submit",
+      buttonAction: "message",
+      buttonUrl: "",
+      buttonMessage: "Thank you for contacting us!"
+    },
+    "payment-checkout": {
+      name: "Payment Checkout Form",
+      fields: [
+        { id: "card-number", placeholder: "Card Number", type: "text", validation: { required: true, regex: /^\d{4}\s?\d{4}\s?\d{4}\s?\d{4}$/, errorMessage: "Please enter a valid 16-digit card number." } },
+        { id: "exp-date", placeholder: "Expiration Date (MM/YY)", type: "text", validation: { required: true } },
+        { id: "cvv", placeholder: "CVV", type: "text", validation: { required: true } }
+      ],
+      buttonText: "Pay Now",
+      buttonAction: "message",
+      buttonUrl: "",
+      buttonMessage: "Payment processed successfully!"
+    }
+  };
+
+  let currentTemplate = 'sign-in';
+  let formId = null; // Track formId for editing existing forms
+
+  // DOM elements
+  const headerInput = $('#custom-header');
+  const subheaderInput = $('#custom-subheader');
+  const placeholderInputsContainer = $('#placeholder-inputs');
+  const addFieldButton = $('#add-field-button');
+  const borderColorButton = $('#border-color-button');
+  const buttonTextInput = $('#button-text');
+  const buttonColorButton = $('#button-color-button');
+  const buttonUrlInput = $('#button-url');
+  const buttonMessageInput = $('#button-message');
+  const buttonActionRadios = $$('input[name="button-action"]');
+  const headerColors = $('#header-colors');
+  const subheaderColors = $('#subheader-colors');
+  const colorPopup = $('#color-popup');
+  const colorOverlay = $('#color-overlay');
+  const popupClose = $('#popup-close');
+  const colorBoxes = $('#color-boxes');
+  const popupTitle = $('#popup-title');
+  const messagePopup = $('#message-popup');
+  const messageOverlay = $('#message-overlay');
+  const messagePopupClose = $('#message-popup-close');
+  const messageText = $('#message-text');
+  const inputFieldsContainer = $('#input-fields');
+  const loginButton = $('#login-button');
+  const loginHeader = $('#login-header');
+  const loginSubheader = $('#login-subheader');
+  const saveButton = $('#save-button');
+  const saveButtonText = $('#save-button-text');
+  const customizer = $('.customizer');
+  const buttonContainer = $('.button-container');
+  const closeButton = $('#close-button');
+  const templateSelector = $('#template-selector');
+  const formTitle = $('.form-title');
+  const themeToggle = $('#theme-toggle');
+  const themeToggleContainer = $('.theme-toggle');
+  const loadingIndicator = $('#loading-indicator');
+  const urlOverlay = $('#url-overlay');
+  const urlPopup = $('#url-popup');
+  const urlPopupClose = $('#url-popup-close');
+  const urlText = $('#url-text');
+  const copyButton = $('#copy-button');
+  const previewButton = $('#preview-button');
+
+  let selectedHeaderSpan = null;
+  let currentColorTarget = null;
+  let fieldCounter = 2;
+  let headerColorsArray = [];
+  const examplePlaceholders = ['e.g., Address', 'e.g., Country', 'e.g., Phone Number', 'e.g., City', 'e.g., Zip Code'];
+
+  // Ensure loading indicator is hidden on page load
+  loadingIndicator.classList.remove('show');
+
+  // Get token from localStorage
+  function getToken() {
+    return localStorage.getItem('token');
+  }
+
+  // Get query parameter
+  function getQueryParam(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
+
+  // Redirect to login if no token
+  function redirectToLogin() {
+    window.location.href = 'login.html';
+  }
+
+  // Updated fetchFormData to use /api/form/:id endpoint
+  async function fetchFormData(formId) {
+    const token = getToken();
+    if (!token) {
+      redirectToLogin();
+      return null;
+    }
+
+    try {
+      const response = await fetch(`${BASE_URL}/api/form/${formId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        mode: 'cors',
+        credentials: 'omit',
+        signal: AbortSignal.timeout(5000)
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          redirectToLogin();
+          return null;
+        } else if (response.status === 404) {
+          throw new Error('Form not found');
+        } else if (response.status === 403) {
+          throw new Error('Access denied: You do not have permission to edit this form');
+        }
+        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      if (!data || !data.template) {
+        throw new Error('Invalid form data received from server');
+      }
+      return data;
+    } catch (error) {
+      console.error('Error fetching form data:', error);
+      showMessagePopup(error.message || 'Failed to load form. Please try again.');
+      return null;
+    }
+  }
+
+  // Validate token and initialize
+  async function validateAndInit() {
+    const token = getToken();
+    if (!token) {
+      redirectToLogin();
+      return;
+    }
+
+    try {
+      const response = await fetch(`${BASE_URL}/user`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        signal: AbortSignal.timeout(5000)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      formId = getQueryParam('formId');
+      if (formId) {
+        saveButtonText.textContent = 'Save Changes';
+        const formData = await fetchFormData(formId);
+        if (formData) {
+          loadFormState(formData);
+        } else {
+          showMessagePopup('Failed to load form. Starting with default template.');
+          loadTemplate('sign-in');
+        }
+      } else {
+        saveButtonText.textContent = 'Create';
+        loadTemplate('sign-in');
+      }
+      updateHeaderText(headerInput.value || 'my form');
+      updateSubheaderText(subheaderInput.value || 'fill the form');
+      toggleButtonActionInputs();
+    } catch (error) {
+      console.error('Token validation failed:', error);
+      localStorage.removeItem('token');
+      showMessagePopup('Session expired. Please log in again.');
+      setTimeout(() => {
+        redirectToLogin();
+      }, 1500);
+    }
+  }
+
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
+  function normalizeUrl(url) {
+    if (!url) return null;
+    if (url.match(/^https?:\/\//)) return url;
+    if (url.match(/\.[a-z]{2,}$/i)) return `https://${url}`;
+    return null;
+  }
+
+  function updateHeaderText(text) {
+    loginHeader.innerHTML = '';
+    if (!text) {
+      loginHeader.textContent = 'my form';
+      headerColorsArray = [];
+      return;
+    }
+    const oldLength = headerColorsArray.length;
+    const newLength = text.replace(/\s/g, '').length;
+    if (newLength > oldLength) {
+      headerColorsArray = headerColorsArray.concat(Array(newLength - oldLength).fill(''));
+    } else if (newLength < oldLength) {
+      headerColorsArray = headerColorsArray.slice(0, newLength);
+    }
+    let colorIndex = 0;
+    for (let i = 0; i < text.length; i++) {
+      const span = document.createElement('span');
+      if (text[i] === ' ') {
+        span.classList.add('space');
+        span.textContent = ' ';
+      } else {
+        span.textContent = text[i];
+        if (headerColorsArray[colorIndex]) {
+          span.style.color = headerColorsArray[colorIndex];
+        } else {
+          span.style.color = '';
+        }
+        if (!document.body.classList.contains('saved-mode')) {
+          span.addEventListener('click', (e) => {
+            e.stopPropagation();
+            loginHeader.querySelectorAll('span').forEach(s => s.classList.remove('selected'));
+            span.classList.add('selected');
+            selectedHeaderSpan = span;
+          });
+        }
+        colorIndex++;
+      }
+      loginHeader.appendChild(span);
+    }
+  }
+
+  function clearHeaderSelection() {
+    if (selectedHeaderSpan) {
+      selectedHeaderSpan.classList.remove('selected');
+      selectedHeaderSpan = null;
+    }
+  }
+
+  function updateSubheaderText(text) {
+    loginSubheader.textContent = text || 'fill the form';
+    if (!loginSubheader.style.color) {
+      loginSubheader.style.color = document.body.classList.contains('dark-mode') ? '#ffffff' : '#555555';
+    }
+  }
+
+  function showColorPopup(target, title) {
+    currentColorTarget = target;
+    popupTitle.textContent = title;
+    colorPopup.classList.add('show');
+    colorOverlay.classList.add('show');
+  }
+
+  function hideColorPopup() {
+    colorPopup.classList.remove('show');
+    colorOverlay.classList.remove('show');
+    currentColorTarget = null;
+  }
+
+  function showMessagePopup(message) {
+    messageText.textContent = message || 'Welcome! You have clicked the button.';
+    messagePopup.classList.add('show');
+    messageOverlay.classList.add('show');
+  }
+
+  function hideMessagePopup() {
+    messagePopup.classList.remove('show');
+    messageOverlay.classList.remove('show');
+  }
+
+  function showUrlPopup(url) {
+    urlText.textContent = url;
+    urlPopup.classList.add('show');
+    urlOverlay.classList.add('show');
+  }
+
+  function hideUrlPopup() {
+    urlPopup.classList.remove('show');
+    urlOverlay.classList.remove('show');
+    copyButton.querySelector('span').textContent = 'Copy Link';
+    copyButton.classList.remove('copied');
+  }
+
+  function toggleButtonActionInputs() {
+    const action = document.querySelector('input[name="button-action"]:checked').value;
+    buttonUrlInput.disabled = action !== 'url';
+    buttonMessageInput.disabled = action !== 'message';
+  }
+
+  function addNewField() {
+    fieldCounter++;
+    const fieldId = `field-${fieldCounter}`;
+    const defaultPlaceholder = `Field ${fieldCounter}`;
+    const examplePlaceholder = examplePlaceholders[(fieldCounter - templates[currentTemplate].fields.length - 1) % examplePlaceholders.length] || `e.g., Field ${fieldCounter}`;
+
+    const newInput = document.createElement('input');
+    newInput.type = 'text';
+    newInput.id = `login-${fieldId}`;
+    newInput.placeholder = defaultPlaceholder;
+    newInput.style.boxShadow = inputFieldsContainer.querySelector('input')?.style.boxShadow || 
+        (document.body.classList.contains('dark-mode') ? '0 0 0 2px #ffffff' : '0 0 0 2px #000000');
+    inputFieldsContainer.appendChild(newInput);
+
+    const fieldContainer = document.createElement('div');
+    fieldContainer.className = 'field-container';
+    fieldContainer.dataset.fieldId = fieldId;
+    fieldContainer.innerHTML = `
+      <label>Field ${fieldCounter} Placeholder:</label>
+      <input type="text" id="${fieldId}-placeholder" placeholder="${examplePlaceholder}">
+      <button class="remove-field-button" aria-label="Remove field">Remove Field</button>
+    `;
+    placeholderInputsContainer.appendChild(fieldContainer);
+
+    const placeholderInput = document.getElementById(`${fieldId}-placeholder`);
+    placeholderInput.addEventListener('input', () => {
+      const loginInput = document.getElementById(`login-${fieldId}`);
+      loginInput.placeholder = placeholderInput.value || defaultPlaceholder;
+    });
+
+    const removeButton = fieldContainer.querySelector('.remove-field-button');
+    removeButton.addEventListener('click', () => {
+      inputFieldsContainer.removeChild(document.getElementById(`login-${fieldId}`));
+      placeholderInputsContainer.removeChild(fieldContainer);
+      updateLoginContainerHeight();
+    });
+
+    updateLoginContainerHeight();
+  }
+
+  function updateLoginContainerHeight() {
+    const inputCount = inputFieldsContainer.children.length;
+    const baseHeight = 300;
+    const additionalHeight = (inputCount - templates[currentTemplate].fields.length) * 40;
+    const loginContainer = document.querySelector('.login-container');
+    loginContainer.style.minHeight = `${baseHeight + additionalHeight}px`;
+  }
+
+  async function saveForm() {
+    const templateFields = templates[currentTemplate].fields.map(field => ({
+      id: field.id,
+      placeholder: document.getElementById(`${field.id}-placeholder`)?.value || field.placeholder
+    }));
+
+    const customFields = Array.from(placeholderInputsContainer.querySelectorAll('.field-container'))
+      .filter(container => !templates[currentTemplate].fields.some(field => field.id === container.dataset.fieldId))
+      .map(container => ({
+        id: container.dataset.fieldId,
+        placeholder: document.getElementById(`${container.dataset.fieldId}-placeholder`).value || `Field`
+      }));
+
+    const state = {
+      template: currentTemplate,
+      headerText: headerInput.value || 'my form',
+      headerColors: headerColorsArray,
+      subheaderText: subheaderInput.value || 'fill the form',
+      subheaderColor: loginSubheader.style.color || (document.body.classList.contains('dark-mode') ? '#ffffff' : '#555555'),
+      placeholders: [...templateFields, ...customFields],
+      borderShadow: inputFieldsContainer.querySelector('input')?.style.boxShadow || (document.body.classList.contains('dark-mode') ? '0 0 0 2px #ffffff' : '0 0 0 2px #000000'),
+      buttonColor: loginButton.style.background || 'linear-gradient(45deg, #00b7ff, #0078ff)',
+      buttonTextColor: loginButton.style.color || (loginButton.style.background === '#ffffff' ? '#000000' : '#ffffff'),
+      buttonText: buttonTextInput.value || templates[currentTemplate].buttonText,
+      buttonAction: document.querySelector('input[name="button-action"]:checked').value,
+      buttonUrl: buttonUrlInput.value || '',
+      buttonMessage: buttonMessageInput.value || '',
+      theme: document.body.classList.contains('dark-mode') ? 'dark' : 'light'
+    };
+
+    const token = getToken();
+    if (!token) {
+      redirectToLogin();
+      return;
+    }
+
+    document.querySelector('.content-container').style.opacity = '0';
+    loadingIndicator.classList.add('show');
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const endpoint = formId ? `${BASE_URL}/api/form/${formId}` : `${BASE_URL}/create`;
+      const method = formId ? 'PUT' : 'POST';
+      const response = await fetch(endpoint, {
+        method,
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(state),
+        signal: controller.signal,
+        mode: 'cors',
+        credentials: 'omit'
+      });
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        loadingIndicator.classList.remove('show');
+        document.querySelector('.content-container').style.opacity = '1';
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          showMessagePopup('Session expired. Please log in again.');
+          setTimeout(() => {
+            redirectToLogin();
+          }, 1500);
+          return;
+        } else if (response.status === 403 && errorData.error?.includes('Maximum form limit')) {
+          showMessagePopup('You’ve reached your daily form creation limit. Upgrade to a premium plan to create unlimited forms!');
+          setTimeout(() => {
+            hideMessagePopup();
+            window.location.href = 'dashboard.html';
+          }, 2000);
+          return;
+        }
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      loadingIndicator.classList.remove('show');
+      showMessagePopup(formId ? 'Form updated successfully!' : 'Form created successfully!');
+      setTimeout(() => {
+        hideMessagePopup();
+        if (!formId) {
+          showUrlPopup(data.url);
+        } else {
+          window.location.href = 'dashboard.html';
+        }
+      }, 1000);
+      return data.url;
+    } catch (error) {
+      console.error('Error saving form:', error);
+      loadingIndicator.classList.remove('show');
+      document.querySelector('.content-container').style.opacity = '1';
+      if (error.name === 'AbortError') {
+        showMessagePopup('Request timed out. Please try again.');
+      } else if (error.message.includes('401')) {
+        localStorage.removeItem('token');
+        showMessagePopup('Session expired. Please log in again.');
+        setTimeout(() => {
+          redirectToLogin();
+        }, 1500);
+      } else {
+        showMessagePopup(error.message || 'Failed to save form. Please try again.');
+      }
+      return null;
+    }
+  }
+
+  function enterCreatedMode() {
+    clearHeaderSelection();
+    document.body.classList.add('saved-mode');
+    customizer.classList.add('hidden');
+    buttonContainer.classList.add('hidden');
+    templateSelector.disabled = true;
+    loginButton.style.pointerEvents = 'auto';
+    updateHeaderText(headerInput.value || 'my form');
+    updateSubheaderText(subheaderInput.value || 'fill the form');
+  }
+
+  function exitCreatedMode() {
+    document.body.classList.remove('saved-mode');
+    customizer.classList.remove('hidden');
+    buttonContainer.classList.remove('hidden');
+    document.querySelector('.content-container').style.opacity = '1';
+    templateSelector.disabled = false;
+    loginButton.style.pointerEvents = 'auto';
+    formTitle.textContent = templates[currentTemplate].name;
+    updateHeaderText(headerInput.value || 'my form');
+  }
+
+  function checkFormFilled() {
+    const inputs = inputFieldsContainer.querySelectorAll('input');
+    const templateFields = templates[currentTemplate].fields;
+
+    for (let i = 0; i < inputs.length; i++) {
+      const input = inputs[i];
+      const value = input.value.trim();
+      const fieldId = input.id.replace('login-', '');
+      const templateField = templateFields.find(field => field.id === fieldId);
+
+      if (!value) {
+        showMessagePopup('Please fill all fields before proceeding.');
+        return false;
+      }
+
+      if (templateField && templateField.validation && templateField.validation.regex) {
+        if (!templateField.validation.regex.test(value)) {
+          showMessagePopup(templateField.validation.errorMessage);
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  function loadFormState(state) {
+    currentTemplate = state.template || 'sign-in';
+    templateSelector.value = currentTemplate;
+    formTitle.textContent = templates[currentTemplate].name;
+    loadTemplate(currentTemplate);
+    headerInput.value = state.headerText || 'my form';
+    subheaderInput.value = state.subheaderText || 'fill the form';
+    loginSubheader.style.color = state.subheaderColor || (document.body.classList.contains('dark-mode') ? '#ffffff' : '#555555');
+    headerColorsArray = state.headerColors || [];
+    document.body.classList.toggle('dark-mode', state.theme === 'dark');
+
+    inputFieldsContainer.innerHTML = '';
+    placeholderInputsContainer.innerHTML = '';
+    fieldCounter = 0;
+
+    state.placeholders.forEach((field, index) => {
+      fieldCounter++;
+      const fieldId = field.id;
+      const newInput = document.createElement('input');
+      const templateField = templates[currentTemplate].fields.find(f => f.id === fieldId);
+      newInput.type = templateField ? templateField.type : 'text';
+      newInput.id = `login-${fieldId}`;
+      newInput.placeholder = field.placeholder;
+      newInput.style.boxShadow = state.borderShadow || (document.body.classList.contains('dark-mode') ? '0 0 0 2px #ffffff' : '0 0 0 2px #000000');
+      inputFieldsContainer.appendChild(newInput);
+
+      const fieldContainer = document.createElement('div');
+      fieldContainer.className = 'field-container';
+      fieldContainer.dataset.fieldId = fieldId;
+      fieldContainer.innerHTML = `
+        <label>Field ${index + 1} Placeholder:</label>
+        <input type="text" id="${fieldId}-placeholder" value="${field.placeholder}">
+        <button class="remove-field-button" aria-label="Remove field">Remove Field</button>
+      `;
+      placeholderInputsContainer.appendChild(fieldContainer);
+
+      const placeholderInput = document.getElementById(`${fieldId}-placeholder`);
+      placeholderInput.addEventListener('input', () => {
+        const loginInput = document.getElementById(`login-${fieldId}`);
+        loginInput.placeholder = placeholderInput.value || field.placeholder;
+      });
+
+      const removeButton = fieldContainer.querySelector('.remove-field-button');
+      removeButton.addEventListener('click', () => {
+        inputFieldsContainer.removeChild(document.getElementById(`login-${fieldId}`));
+        placeholderInputsContainer.removeChild(fieldContainer);
+        updateLoginContainerHeight();
+      });
+    });
+
+    loginButton.style.background = state.buttonColor || 'linear-gradient(45deg, #00b7ff, #0078ff)';
+    loginButton.style.color = state.buttonTextColor || (state.buttonColor === '#ffffff' ? '#000000' : '#ffffff');
+    buttonTextInput.value = state.buttonText || templates[currentTemplate].buttonText;
+    loginButton.textContent = state.buttonText || templates[currentTemplate].buttonText;
+    document.querySelector(`input[name="button-action"][value="${state.buttonAction}"]`).checked = true;
+    buttonUrlInput.value = state.buttonUrl || '';
+    buttonMessageInput.value = state.buttonMessage || '';
+    toggleButtonActionInputs();
+    updateHeaderText(state.headerText || 'my form');
+    updateSubheaderText(state.subheaderText || 'fill the form');
+    updateLoginContainerHeight();
+  }
+
+  function loadTemplate(templateId) {
+    currentTemplate = templateId;
+    formTitle.textContent = templates[templateId].name;
+    inputFieldsContainer.innerHTML = '';
+    placeholderInputsContainer.innerHTML = '';
+    fieldCounter = templates[templateId].fields.length;
+
+    templates[templateId].fields.forEach((field, index) => {
+      const newInput = document.createElement('input');
+      newInput.type = field.type;
+      newInput.id = `login-${field.id}`;
+      newInput.placeholder = field.placeholder;
+      newInput.style.boxShadow = document.body.classList.contains('dark-mode') ? '0 0 0 2px #ffffff' : '0 0 0 2px #000000';
+      inputFieldsContainer.appendChild(newInput);
+
+      const fieldContainer = document.createElement('div');
+      fieldContainer.className = 'field-container';
+      fieldContainer.dataset.fieldId = field.id;
+      fieldContainer.innerHTML = `
+        <label>Field ${index + 1} Placeholder:</label>
+        <input type="text" id="${field.id}-placeholder" placeholder="${field.placeholder}">
+      `;
+      placeholderInputsContainer.appendChild(fieldContainer);
+
+      const placeholderInput = document.getElementById(`${field.id}-placeholder`);
+      placeholderInput.addEventListener('input', () => {
+        const loginInput = document.getElementById(`login-${field.id}`);
+        loginInput.placeholder = placeholderInput.value || field.placeholder;
+      });
+    });
+
+    loginButton.textContent = templates[templateId].buttonText;
+    loginButton.style.background = 'linear-gradient(45deg, #00b7ff, #0078ff)';
+    loginButton.style.color = '#ffffff';
+    buttonTextInput.value = templates[templateId].buttonText;
+    document.querySelector(`input[name="button-action"][value="${templates[templateId].buttonAction}"]`).checked = true;
+    buttonUrlInput.value = templates[templateId].buttonUrl;
+    buttonMessageInput.value = templates[templateId].buttonMessage;
+    toggleButtonActionInputs();
+    updateLoginContainerHeight();
+  }
+
+  themeToggleContainer.addEventListener('click', debounce(() => {
+    themeToggle.checked = !themeToggle.checked;
+    document.body.classList.toggle('dark-mode');
+    updateSubheaderText(subheaderInput.value || 'fill the form');
+    updateHeaderText(headerInput.value || 'my form');
+    inputFieldsContainer.querySelectorAll('input').forEach(input => {
+      if (!input.style.boxShadow || input.style.boxShadow === 'none') {
+        input.style.boxShadow = document.body.classList.contains('dark-mode') ? '0 0 0 2px #ffffff' : '0 0 0 2px #000000';
+      }
+    });
+  }, 200));
+
+  document.addEventListener('click', (e) => {
+    if (!loginHeader.contains(e.target) && !document.body.classList.contains('saved-mode')) {
+      clearHeaderSelection();
+    }
+  });
+
+  headerInput.addEventListener('input', () => {
+    const text = headerInput.value || 'my form';
+    updateHeaderText(text);
+  });
+
+  subheaderInput.addEventListener('input', () => {
+    const text = subheaderInput.value || 'fill the form';
+    updateSubheaderText(text);
+  });
+
+  buttonTextInput.addEventListener('input', () => {
+    loginButton.textContent = buttonTextInput.value || templates[currentTemplate].buttonText;
+  });
+
+  addFieldButton.addEventListener('click', addNewField);
+
+  buttonActionRadios.forEach(radio => {
+    radio.addEventListener('change', toggleButtonActionInputs);
+  });
+
+  loginButton.addEventListener('click', () => {
+    if (!checkFormFilled()) {
+      return;
+    }
+    const action = document.querySelector('input[name="button-action"]:checked').value;
+    if (action === 'url') {
+      const normalizedUrl = normalizeUrl(buttonUrlInput.value);
+      if (normalizedUrl) {
+        window.location.href = normalizedUrl;
+      } else {
+        showMessagePopup('Please enter a valid URL (e.g., www.example.com).');
+      }
+    } else if (action === 'message') {
+      showMessagePopup(buttonMessageInput.value);
+    }
+  });
+
+  headerColors.querySelectorAll('.color-box').forEach(box => {
+    box.addEventListener('click', () => {
+      const color = box.getAttribute('data-color');
+      if (selectedHeaderSpan) {
+        const spans = Array.from(loginHeader.querySelectorAll('span:not(.space)'));
+        const index = spans.indexOf(selectedHeaderSpan);
+        if (index !== -1) {
+          headerColorsArray[index] = color;
+          selectedHeaderSpan.style.color = color;
+          selectedHeaderSpan.classList.remove('selected');
+          selectedHeaderSpan = null;
+        }
+      } else {
+        loginHeader.querySelectorAll('span:not(.space)').forEach((span, index) => {
+          span.style.color = color;
+          headerColorsArray[index] = color;
+        });
+      }
+    });
+  });
+
+  subheaderColors.querySelectorAll('.color-box').forEach(box => {
+    box.addEventListener('click', () => {
+      const color = box.getAttribute('data-color');
+      loginSubheader.style.color = color;
+    });
+  });
+
+  borderColorButton.addEventListener('click', () => {
+    showColorPopup('border', 'Select Border Color');
+  });
+
+  buttonColorButton.addEventListener('click', () => {
+    showColorPopup('button', 'Select Button Color');
+  });
+
+  popupClose.addEventListener('click', hideColorPopup);
+  colorOverlay.addEventListener('click', hideColorPopup);
+
+  colorBoxes.querySelectorAll('.color-box').forEach(box => {
+    box.addEventListener('click', () => {
+      const color = box.getAttribute('data-color');
+      if (currentColorTarget === 'border') {
+        inputFieldsContainer.querySelectorAll('input').forEach(input => {
+          input.style.boxShadow = `0 0 0 2px ${color}`;
+        });
+      } else if (currentColorTarget === 'button') {
+        loginButton.style.background = color;
+        loginButton.style.backgroundImage = 'none';
+        loginButton.style.color = color === '#ffffff' ? '#000000' : '#ffffff';
+      }
+      hideColorPopup();
+    });
+  });
+
+  messagePopupClose.addEventListener('click', hideMessagePopup);
+  messageOverlay.addEventListener('click', hideMessagePopup);
+
+  urlPopupClose.addEventListener('click', () => {
+    hideUrlPopup();
+    window.location.href = 'dashboard.html';
+  });
+
+  urlOverlay.addEventListener('click', () => {
+    hideUrlPopup();
+    window.location.href = 'dashboard.html';
+  });
+
+  copyButton.addEventListener('click', async () => {
+    const url = urlText.textContent;
+    try {
+      await navigator.clipboard.writeText(url);
+      copyButton.querySelector('span').textContent = 'Copied';
+      copyButton.classList.add('copied');
+      setTimeout(() => {
+        copyButton.querySelector('span').textContent = 'Copy Link';
+        copyButton.classList.remove('copied');
+      }, 2000);
+    } catch (error) {
+      console.error('Error copying to clipboard:', error);
+      const range = document.createRange();
+      range.selectNode(urlText);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      showMessagePopup('Failed to copy automatically. Please press Ctrl+C to copy the selected link.');
+    }
+  });
+
+  previewButton.addEventListener('click', () => {
+    const url = urlText.textContent;
+    window.open(url, '_blank');
+  });
+
+  saveButton.addEventListener('click', () => {
+    saveForm();
+  });
+
+  closeButton.addEventListener('click', exitCreatedMode);
+
+  templateSelector.addEventListener('change', () => {
+    loadTemplate(templateSelector.value);
+  });
+
+  document.addEventListener('DOMContentLoaded', validateAndInit);
+</script>
+</body>
+</html>
