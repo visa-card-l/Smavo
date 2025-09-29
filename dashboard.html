@@ -538,6 +538,21 @@
     </div>
     <div class="modal-content"></div>
   </div>
+
+  <!-- Modal for upgrade popup -->
+  <div class="modal" id="upgradePopup">
+    <div class="modal-header">
+      <div class="modal-title">Upgrade Required</div>
+      <button class="modal-close" id="upgradePopupClose">&times;</button>
+    </div>
+    <div class="modal-content">
+      <p>To connect your Telegram and receive instant notifications for form submissions, upgrade to a Premium plan.</p>
+      <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+        <button class="btn" id="cancelUpgrade">Cancel</button>
+        <button class="btn btn-primary" id="upgradeNow">Upgrade Now</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1276,6 +1291,7 @@
     $('#modalOverlay').classList.remove('show');
     $('#submissionsModal').classList.remove('show');
     $('#plansModal').classList.remove('show');
+    $('#upgradePopup').classList.remove('show');
   }
 
   // Render forms
@@ -1428,11 +1444,22 @@
 
   $('#btnTelegram').addEventListener('click', () => {
     console.log('Initiating Telegram connection');
-    connectTelegram();
+    if (!subscriptionStatus.isSubscribed) {
+      $('#modalOverlay').classList.add('show');
+      $('#upgradePopup').classList.add('show');
+    } else {
+      connectTelegram();
+    }
   });
 
   $('#modalClose').addEventListener('click', closeModal);
   $('#plansModalClose').addEventListener('click', closeModal);
+  $('#upgradePopupClose').addEventListener('click', closeModal);
+  $('#cancelUpgrade').addEventListener('click', closeModal);
+  $('#upgradeNow').addEventListener('click', () => {
+    closeModal();
+    showPlansModal();
+  });
   $('#modalOverlay').addEventListener('click', closeModal);
 
   $('#btnLogout').addEventListener('click', () => {
