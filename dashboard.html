@@ -326,6 +326,10 @@
   }
   .submission-data p {
     margin: 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: nowrap;
   }
   .submission-delete-btn {
     appearance: none;
@@ -344,6 +348,40 @@
   .submission-delete-btn:hover {
     transform: scale(1.1);
     background: linear-gradient(180deg, rgba(255,183,183,0.9), rgba(255,183,183,0.7));
+  }
+  /* Field copy button for submissions */
+  .field-copy-btn {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 2px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+  }
+  .field-copy-btn:hover {
+    background: #eee;
+  }
+  .field-copy-btn .icon, .field-copy-btn .check {
+    width: 14px;
+    height: 14px;
+    stroke: #666;
+    transition: all .15s ease;
+  }
+  .field-copy-btn .check {
+    opacity: 0;
+    transform: scale(.6);
+  }
+  .field-copy-btn.ok .icon {
+    opacity: 0;
+    transform: scale(.6);
+  }
+  .field-copy-btn.ok .check {
+    opacity: 1;
+    transform: scale(1);
+    stroke: #10b981;
   }
 
   /* Plans Modal Specific Styles */
@@ -1053,13 +1091,48 @@
           </div>
           <div class="submission-data">
             ${Object.entries(submission.data).map(([key, value]) =>
-              `<p><strong>${sanitize(key)}:</strong> ${sanitize(value)}</p>`
+              `<p><strong>${sanitize(key)}:</strong> ${sanitize(value)} <button class="field-copy-btn" data-value="${sanitize(value)}" title="Copy value">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg>
+              </button></p>`
             ).join('')}
           </div>
         `;
         modalContent.appendChild(submissionEl);
       });
 
+      // Add event listeners for field copy buttons
+      $$('.field-copy-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const value = btn.getAttribute('data-value');
+          try {
+            await navigator.clipboard.writeText(value);
+            btn.classList.add('ok');
+            setTimeout(() => { btn.classList.remove('ok'); }, 1400);
+          } catch(e) {
+            // Fallback
+            const ta = document.createElement('textarea');
+            ta.value = value;
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+              document.execCommand('copy');
+              btn.classList.add('ok');
+              setTimeout(() => { btn.classList.remove('ok'); }, 1400);
+            } catch(err) {
+              // Copy failed
+            }
+            ta.remove();
+          }
+        });
+      });
+
+      // Add event listeners for delete buttons
       $$('.submission-delete-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const formId = btn.getAttribute('data-form-id');
@@ -1135,8 +1208,8 @@
       console.error('Error initiating payment:', error.message);
       $('#plansModal .modal-content').innerHTML = `
         <div class="error">
-          Failed to initiate payment: ${sanitize(error.message)}<br>
-          <small>Check browser console for details</small><br>
+          Something went wrong, <br>
+          <small>Try again</small><br>
           <button class="btn" onclick="showPlansModal()" style="margin-top: 10px;">Try Again</button>
         </div>
       `;
