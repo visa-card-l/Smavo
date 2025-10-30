@@ -1903,11 +1903,13 @@
     } else if (target === 'button') {
       initialHex = getButtonColor();
     }
-    setPickerColor(initialHex);
     customPopupTitle.textContent = `Custom ${target.charAt(0).toUpperCase() + target.slice(1)} Color`;
     customColorPopup.classList.add('show');
     customOverlay.classList.add('show');
-    setTimeout(resizeCustomCanvas, 100);
+    setTimeout(() => {
+      resizeCustomCanvas();
+      setPickerColor(initialHex);
+    }, 100);
   }
 
   function hideCustomColorPopup() {
