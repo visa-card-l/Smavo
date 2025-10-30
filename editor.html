@@ -878,6 +878,309 @@
     background: linear-gradient(45deg, #0078ff, #005bb5);
   }
 
+  /* Custom Color Picker Styles */
+  .picker {
+    background: white;
+    border-radius: 6px;
+    padding: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 250px;
+  }
+
+  body.dark-mode .picker {
+    background: #2f3b5a;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
+
+  .top-section {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .preview-section,
+  .color-section {
+    flex: 1;
+  }
+
+  .preview {
+    width: 100%;
+    height: 70px;
+    border-radius: 3px;
+    margin-bottom: 6px;
+    background-color: #1f664e;
+  }
+
+  .preview-label {
+    text-align: center;
+    margin-bottom: 2px;
+    font-size: 10px;
+    opacity: 0.8;
+    color: #333;
+  }
+
+  body.dark-mode .preview-label {
+    color: #d1d5db;
+  }
+
+  .color-area {
+    width: 100%;
+    height: 70px;
+    border-radius: 3px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+
+  .color-area-label {
+    text-align: center;
+    margin-bottom: 2px;
+    font-size: 10px;
+    opacity: 0.8;
+    color: #333;
+  }
+
+  body.dark-mode .color-area-label {
+    color: #d1d5db;
+  }
+
+  #custom-colorCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    cursor: crosshair;
+  }
+
+  .color-dot {
+    width: 8px;
+    height: 8px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    position: absolute;
+    pointer-events: none;
+    transform: translate(-4px, -4px);
+  }
+
+  body.dark-mode .color-dot {
+    border-color: #fff;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red);
+    outline: none;
+    margin-bottom: 6px;
+  }
+
+  body.dark-mode input[type="range"] {
+    background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+  }
+
+  .hue-label {
+    text-align: center;
+    margin-bottom: 2px;
+    font-size: 10px;
+    opacity: 0.8;
+    color: #333;
+  }
+
+  body.dark-mode .hue-label {
+    color: #d1d5db;
+  }
+
+  .hex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 3px 6px;
+    border-radius: 3px;
+  }
+
+  body.dark-mode .hex {
+    background: #3b4a6b;
+  }
+
+  .hex input {
+    background: white;
+    border: 1px solid black;
+    color: black;
+    font-size: 12px;
+    width: 50px;
+    text-transform: uppercase;
+    padding: 2px;
+    border-radius: 2px;
+  }
+
+  body.dark-mode .hex input {
+    background: #3b4a6b;
+    border: 1px solid #6b7280;
+    color: #f8f9fa;
+  }
+
+  .hex span {
+    color: #333;
+  }
+
+  body.dark-mode .hex span {
+    color: #f8f9fa;
+  }
+
+  .copy {
+    cursor: pointer;
+    color: #00bfa5;
+    font-weight: bold;
+    font-size: 12px;
+  }
+
+  body.dark-mode .copy {
+    color: #10b981;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 30px 16px 16px;
+    }
+
+    body.saved-mode {
+      padding: 30px 16px 16px;
+    }
+
+    .form-title {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+    }
+
+    .template-instruction {
+      font-size: 0.9rem;
+      padding: 6px 12px;
+      max-width: 300px;
+    }
+
+    .template-selector-container {
+      max-width: 300px;
+    }
+
+    .content-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .login-container, .customizer, .button-container {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .login-container {
+      height: auto;
+      min-height: 300px;
+      padding: 16px;
+    }
+
+    .login-container h2 {
+      font-size: 1.6rem;
+    }
+
+    .login-container input, .login-container button {
+      padding: 12px;
+      font-size: 0.9rem;
+    }
+
+    .login-container button {
+      padding: 14px;
+      border-radius: 50px;
+    }
+
+    .customizer {
+      max-height: 260px;
+      padding: 16px 16px 16px 12px;
+    }
+
+    .button-container {
+      width: 100%;
+      max-width: 300px;
+      margin-top: 12px;
+    }
+
+    .save-button {
+      padding: 12px;
+      font-size: 0.9rem;
+    }
+
+    .close-button {
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      font-size: 1.2rem;
+    }
+
+    .popup {
+      width: 80%;
+      max-width: 280px;
+      padding: 16px;
+    }
+
+    .loading {
+      font-size: 0.85rem;
+      padding: 12px 20px;
+    }
+
+    #url-popup {
+      padding: 20px;
+    }
+
+    #url-popup p#url-text {
+      font-size: 0.8rem;
+    }
+
+    .copy-button, .preview-button {
+      font-size: 0.85rem;
+      padding: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .picker {
+        padding: 6px;
+      }
+
+      .top-section {
+        gap: 4px;
+      }
+
+      .preview,
+      .color-area {
+        height: 60px;
+      }
+
+      .preview-label,
+      .color-area-label,
+      .hue-label {
+        font-size: 9px;
+      }
+
+      .hex input {
+        width: 40px;
+        font-size: 10px;
+      }
+
+      .color-dot {
+        width: 6px;
+        height: 6px;
+        transform: translate(-3px, -3px);
+        border-width: 1px;
+      }
+    }
+  }
+
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -1145,6 +1448,7 @@
           <div class="color-box" style="background-color: #ffffff;" data-color="#ffffff"></div>
           <div class="color-box" style="background-color: #000000;" data-color="#000000"></div>
         </div>
+        <button class="color-button" id="custom-header-color-btn">or pick custom color</button>
         <p class="instructions">Tap a color to apply to the whole header, or select a letter in the header text (blue circle appears) and tap a color to apply to that letter only.</p>
         <label>Subheader Text:</label>
         <input type="text" id="custom-subheader" placeholder="fill the form" aria-label="Subheader text">
@@ -1158,6 +1462,7 @@
           <div class="color-box" style="background-color: #ffffff;" data-color="#ffffff"></div>
           <div class="color-box" style="background-color: #000000;" data-color="#000000"></div>
         </div>
+        <button class="color-button" id="custom-subheader-color-btn">or pick custom color</button>
       </div>
       <div class="customizer-section">
         <h4>Edit Fields</h4>
@@ -1167,6 +1472,7 @@
         <button class="add-field-button" id="add-field-button" aria-label="Add new field">Add Field</button>
         <label>Input Border Color:</label>
         <button class="color-button" id="border-color-button" aria-label="Choose input border color">Choose Border Color</button>
+        <button class="color-button" id="custom-border-color-btn">or pick custom color</button>
       </div>
       <div class="customizer-section">
         <h4>Button</h4>
@@ -1174,6 +1480,7 @@
         <input type="text" id="button-text" placeholder="Sign In" aria-label="Button text">
         <label>Button Color:</label>
         <button class="color-button" id="button-color-button" aria-label="Choose button color">Choose Button Color</button>
+        <button class="color-button" id="custom-button-color-btn">or pick custom color</button>
         <label>Button Action:</label>
         <div class="radio-group">
           <label><input type="radio" name="button-action" value="url" checked aria-label="Link to URL"> Link to URL</label>
@@ -1200,6 +1507,33 @@
       <div class="color-box" style="background-color: #1e3a8a;" data-color="#1e3a8a"></div>
       <div class="color-box" style="background-color: #ffffff;" data-color="#ffffff"></div>
       <div class="color-box" style="background-color: #000000;" data-color="#000000"></div>
+    </div>
+  </div>
+  <div class="overlay" id="custom-overlay"></div>
+  <div class="popup" id="custom-color-popup">
+    <button class="popup-close" id="custom-popup-close" aria-label="Close custom color picker">&times;</button>
+    <h4 id="custom-popup-title">Custom Color</h4>
+    <div class="picker">
+      <div class="top-section">
+        <div class="preview-section">
+          <div class="preview-label">Final Color Preview</div>
+          <div class="preview" id="custom-preview"></div>
+        </div>
+        <div class="color-section">
+          <div class="color-area-label">Saturation / Brightness</div>
+          <div class="color-area" id="custom-color-area">
+            <canvas id="custom-colorCanvas"></canvas>
+            <div class="color-dot" id="custom-dot"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hue-label">Hue</div>
+      <input type="range" id="custom-hue" min="0" max="360" value="160">
+      <div class="hex">
+        <span>HEX</span>
+        <input type="text" id="custom-hex" value="#1f664e">
+        <span class="copy" id="custom-copy">📋</span>
+      </div>
     </div>
   </div>
   <div class="overlay" id="message-overlay"></div>
@@ -1315,11 +1649,272 @@
   const copyButton = $('#copy-button');
   const previewButton = $('#preview-button');
 
+  // Custom color picker elements
+  const customColorPopup = $('#custom-color-popup');
+  const customOverlay = $('#custom-overlay');
+  const customPopupClose = $('#custom-popup-close');
+  const customPopupTitle = $('#custom-popup-title');
+  const customHue = $('#custom-hue');
+  const customColorArea = $('#custom-color-area');
+  const customCanvas = $('#custom-colorCanvas');
+  const customPreview = $('#custom-preview');
+  const customHexInput = $('#custom-hex');
+  const customDot = $('#custom-dot');
+  const customCopy = $('#custom-copy');
+
   let selectedHeaderSpan = null;
   let currentColorTarget = null;
+  let currentCustomTarget = null;
   let fieldCounter = 2;
   let headerColorsArray = [];
   const examplePlaceholders = ['e.g., Address', 'e.g., Country', 'e.g., Phone Number', 'e.g., City', 'e.g., Zip Code'];
+
+  // Custom picker vars
+  let customHueValue = 160, customSaturation = 0.7, customBrightness = 0.4;
+
+  // Color utility functions
+  function hsbToRgb(h, s, b) {
+    s *= 1; b *= 1;
+    let k = n => (n + h / 60) % 6;
+    let f = n => b - b * s * Math.max(Math.min(k(n), 4 - k(n), 1), 0);
+    let rgb = [f(5), f(3), f(1)].map(x => Math.round(x * 255));
+    return rgb;
+  }
+
+  function hsbToHex(h, s, b) {
+    const [r, g, bb] = hsbToRgb(h, s, b);
+    return "#" + [r, g, bb].map(x => x.toString(16).padStart(2, "0")).join("");
+  }
+
+  function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+
+  function rgbToHsb(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, v = max;
+    const d = max - min;
+    s = max == 0 ? 0 : d / max;
+    if (max == min) {
+      h = 0;
+    } else {
+      switch(max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+    return { h: h * 360, s: s, v: v };
+  }
+
+  function colorToHex(colorStr) {
+    if (!colorStr || colorStr === 'transparent' || colorStr === '') return document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
+    if (colorStr.startsWith('#')) return colorStr;
+    const temp = document.createElement('div');
+    temp.style.color = colorStr;
+    document.body.appendChild(temp);
+    const computed = getComputedStyle(temp).color;
+    document.body.removeChild(temp);
+    const match = computed.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+    if (match) {
+      const [r, g, b] = match.slice(1).map(n => parseInt(n, 10));
+      return '#' + [r, g, b].map(n => n.toString(16).padStart(2, '0')).join('');
+    }
+    return document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
+  }
+
+  function getBorderColor() {
+    const inp = inputFieldsContainer.querySelector('input');
+    if (!inp) return document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
+    let shadow = inp.style.boxShadow;
+    if (!shadow) shadow = getComputedStyle(inp).boxShadow;
+    let match = shadow.match(/2px\s*rgba?\s*\(\s*(\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+      const [r, g, b] = match.slice(1).map(n => parseInt(n, 10));
+      return '#' + [r, g, b].map(n => n.toString(16).padStart(2, '0')).join('');
+    }
+    match = shadow.match(/2px\s*(#[0-9a-fA-F]{3,6})\s*\)/);
+    if (match) return match[1];
+    return document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
+  }
+
+  function getButtonColor() {
+    let bg = loginButton.style.background;
+    if (bg && !bg.includes('linear-gradient')) {
+      return colorToHex(bg);
+    }
+    return '#00b7ff';
+  }
+
+  function applyCustomColor(hex) {
+    if (!currentCustomTarget) return;
+    const color = hex;
+    if (currentCustomTarget === 'header') {
+      if (selectedHeaderSpan) {
+        selectedHeaderSpan.style.color = color;
+        const spans = Array.from(loginHeader.querySelectorAll('span:not(.space)'));
+        const index = spans.indexOf(selectedHeaderSpan);
+        if (index !== -1) {
+          headerColorsArray[index] = color;
+        }
+        selectedHeaderSpan.classList.remove('selected');
+        selectedHeaderSpan = null;
+      } else {
+        loginHeader.querySelectorAll('span:not(.space)').forEach((span, index) => {
+          span.style.color = color;
+          headerColorsArray[index] = color;
+        });
+      }
+    } else if (currentCustomTarget === 'subheader') {
+      loginSubheader.style.color = color;
+    } else if (currentCustomTarget === 'border') {
+      inputFieldsContainer.querySelectorAll('input').forEach(input => {
+        input.style.boxShadow = `0 0 0 2px ${color}`;
+      });
+    } else if (currentCustomTarget === 'button') {
+      loginButton.style.background = color;
+      loginButton.style.backgroundImage = 'none';
+      loginButton.style.color = color === '#ffffff' ? '#000000' : '#ffffff';
+    }
+  }
+
+  // Custom picker functions
+  function resizeCustomCanvas() {
+    customCanvas.width = customColorArea.clientWidth;
+    customCanvas.height = customColorArea.clientHeight;
+  }
+
+  function customPositionDot() {
+    const rect = customColorArea.getBoundingClientRect();
+    const x = customSaturation * rect.width;
+    const y = (1 - customBrightness) * rect.height;
+    customDot.style.left = `${x}px`;
+    customDot.style.top = `${y}px`;
+  }
+
+  function customDrawColorArea(h) {
+    const ctx = customCanvas.getContext('2d');
+    const width = customCanvas.width;
+    const height = customCanvas.height;
+    const imageData = ctx.createImageData(width, height);
+    for (let y = 0; y < height; y++) {
+      const br = 1 - y / height;
+      for (let x = 0; x < width; x++) {
+        const sa = x / width;
+        const index = (y * width + x) * 4;
+        const [r, g, bb] = hsbToRgb(h, sa, br);
+        imageData.data[index] = r;
+        imageData.data[index + 1] = g;
+        imageData.data[index + 2] = bb;
+        imageData.data[index + 3] = 255;
+      }
+    }
+    ctx.putImageData(imageData, 0, 0);
+  }
+
+  function customUpdateVisuals() {
+    const hex = hsbToHex(customHueValue, customSaturation, customBrightness);
+    customPreview.style.background = hex;
+    customDrawColorArea(customHueValue);
+  }
+
+  function customUpdate() {
+    customUpdateVisuals();
+    const hex = hsbToHex(customHueValue, customSaturation, customBrightness);
+    customHexInput.value = hex;
+    applyCustomColor(hex);
+  }
+
+  function getClientPos(e) {
+    if (e.touches && e.touches.length > 0) {
+      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    } else {
+      return { x: e.clientX, y: e.clientY };
+    }
+  }
+
+  function customHandleStart(e) {
+    e.preventDefault();
+    customHexInput.blur();
+    const rect = customCanvas.getBoundingClientRect();
+    const move = (ev) => {
+      ev.preventDefault();
+      const pos = getClientPos(ev);
+      let x = pos.x - rect.left;
+      let y = pos.y - rect.top;
+      x = Math.max(0, Math.min(x, rect.width));
+      y = Math.max(0, Math.min(y, rect.height));
+      customSaturation = x / rect.width;
+      customBrightness = 1 - y / rect.height;
+      customDot.style.left = `${x}px`;
+      customDot.style.top = `${y}px`;
+      customUpdate();
+    };
+    move(e);
+
+    const handleMove = (ev) => {
+      ev.preventDefault();
+      move(ev);
+    };
+
+    const handleEnd = (ev) => {
+      ev.preventDefault();
+      document.removeEventListener("mousemove", handleMove);
+      document.removeEventListener("touchmove", handleMove);
+      document.removeEventListener("mouseup", handleEnd);
+      document.removeEventListener("touchend", handleEnd);
+    };
+
+    document.addEventListener("mousemove", handleMove, { passive: false });
+    document.addEventListener("touchmove", handleMove, { passive: false });
+    document.addEventListener("mouseup", handleEnd, { once: true });
+    document.addEventListener("touchend", handleEnd, { once: true });
+  }
+
+  function setPickerColor(hex) {
+    const rgb = hexToRgb(hex);
+    if (!rgb) return;
+    const hsb = rgbToHsb(rgb.r, rgb.g, rgb.b);
+    customHueValue = hsb.h;
+    customSaturation = hsb.s;
+    customBrightness = hsb.v;
+    customHue.value = Math.round(customHueValue);
+    customPositionDot();
+    customUpdate();
+  }
+
+  function openCustomPicker(target) {
+    currentCustomTarget = target;
+    let initialHex;
+    if (target === 'header') {
+      const targetEl = selectedHeaderSpan || loginHeader.querySelector('span:not(.space)');
+      initialHex = targetEl ? colorToHex(getComputedStyle(targetEl).color) : '#000000';
+    } else if (target === 'subheader') {
+      initialHex = colorToHex(getComputedStyle(loginSubheader).color);
+    } else if (target === 'border') {
+      initialHex = getBorderColor();
+    } else if (target === 'button') {
+      initialHex = getButtonColor();
+    }
+    setPickerColor(initialHex);
+    customPopupTitle.textContent = `Custom ${target.charAt(0).toUpperCase() + target.slice(1)} Color`;
+    customColorPopup.classList.add('show');
+    customOverlay.classList.add('show');
+    setTimeout(resizeCustomCanvas, 100);
+  }
+
+  function hideCustomColorPopup() {
+    customColorPopup.classList.remove('show');
+    customOverlay.classList.remove('show');
+    currentCustomTarget = null;
+  }
 
   // Ensure loading indicator is hidden on page load
   loadingIndicator.classList.remove('show');
@@ -1862,6 +2457,7 @@
     updateLoginContainerHeight();
   }
 
+  // Event listeners
   themeToggleContainer.addEventListener('click', debounce(() => {
     themeToggle.checked = !themeToggle.checked;
     document.body.classList.toggle('dark-mode');
@@ -1953,6 +2549,12 @@
     showColorPopup('button', 'Select Button Color');
   });
 
+  // Custom color buttons
+  $('#custom-header-color-btn').addEventListener('click', () => openCustomPicker('header'));
+  $('#custom-subheader-color-btn').addEventListener('click', () => openCustomPicker('subheader'));
+  $('#custom-border-color-btn').addEventListener('click', () => openCustomPicker('border'));
+  $('#custom-button-color-btn').addEventListener('click', () => openCustomPicker('button'));
+
   popupClose.addEventListener('click', hideColorPopup);
   colorOverlay.addEventListener('click', hideColorPopup);
 
@@ -1971,6 +2573,44 @@
       hideColorPopup();
     });
   });
+
+  // Custom picker listeners
+  customHue.addEventListener("input", e => {
+    customHueValue = parseFloat(e.target.value);
+    customUpdate();
+  });
+
+  customHexInput.addEventListener('input', (e) => {
+    const inputVal = e.target.value.toUpperCase();
+    if (inputVal.length === 7 && inputVal.startsWith('#')) {
+      const val = inputVal.slice(1);
+      if (/^[0-9A-F]{6}$/.test(val)) {
+        const rgb = hexToRgb(inputVal);
+        if (rgb) {
+          const hsb = rgbToHsb(rgb.r, rgb.g, rgb.b);
+          customHueValue = hsb.h;
+          customSaturation = hsb.s;
+          customBrightness = hsb.v;
+          customHue.value = Math.round(customHueValue);
+          customPositionDot();
+          customUpdateVisuals();
+          applyCustomColor(inputVal);
+        }
+      }
+    }
+  });
+
+  customCanvas.addEventListener("mousedown", customHandleStart);
+  customCanvas.addEventListener("touchstart", customHandleStart, { passive: false });
+
+  customCopy.addEventListener("click", () => {
+    navigator.clipboard.writeText(customHexInput.value);
+    customCopy.textContent = "✅";
+    setTimeout(() => customCopy.textContent = "📋", 1000);
+  });
+
+  customPopupClose.addEventListener('click', hideCustomColorPopup);
+  customOverlay.addEventListener('click', hideCustomColorPopup);
 
   messagePopupClose.addEventListener('click', hideMessagePopup);
   messageOverlay.addEventListener('click', hideMessagePopup);
