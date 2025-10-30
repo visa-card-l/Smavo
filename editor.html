@@ -1893,23 +1893,12 @@
 
   function openCustomPicker(target) {
     currentCustomTarget = target;
-    let initialHex;
-    if (target === 'header') {
-      const targetEl = selectedHeaderSpan || loginHeader.querySelector('span:not(.space)');
-      initialHex = targetEl ? colorToHex(getComputedStyle(targetEl).color) : '#000000';
-    } else if (target === 'subheader') {
-      initialHex = colorToHex(getComputedStyle(loginSubheader).color);
-    } else if (target === 'border') {
-      initialHex = getBorderColor();
-    } else if (target === 'button') {
-      initialHex = getButtonColor();
-    }
     customPopupTitle.textContent = `Custom ${target.charAt(0).toUpperCase() + target.slice(1)} Color`;
     customColorPopup.classList.add('show');
     customOverlay.classList.add('show');
     setTimeout(() => {
       resizeCustomCanvas();
-      setPickerColor(initialHex);
+      setPickerColor('#1f664e');
     }, 100);
   }
 
