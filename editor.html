@@ -1880,11 +1880,12 @@
 
   function setPickerColor(hex) {
     const rgb = hexToRgb(hex);
-    if (!rgb) return;
-    const hsb = rgbToHsb(rgb.r, rgb.g, rgb.b);
-    customHueValue = hsb.h;
-    customSaturation = hsb.s;
-    customBrightness = hsb.v;
+    if (rgb) {
+      const hsb = rgbToHsb(rgb.r, rgb.g, rgb.b);
+      customHueValue = hsb.h;
+      customSaturation = hsb.s;
+      customBrightness = hsb.v;
+    }
     customHue.value = Math.round(customHueValue);
     customPositionDot();
     customUpdate();
