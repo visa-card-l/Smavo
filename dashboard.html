@@ -607,7 +607,7 @@
   let pollingInterval = null;
 
   // Base URL for backend
-  const BASE_URL = 'https://smav.onrender.com';
+  const BASE_URL = 'https://plexzoran.onrender.com';
 
   // Get token from localStorage
   function getToken() {
@@ -722,7 +722,7 @@
       pollCount++;
       console.log(`Polling attempt ${pollCount}/${maxPolls}`);
       try {
-        const data = await fetchDashboard();
+        const data = await fetchForms();
         if (data.isSubscribed && data.subscriptionDetails?.billingPeriod === 'monthly') {
           console.log('Monthly subscription confirmed, stopping polling');
           stopPolling();
@@ -740,21 +740,18 @@
     }, 5000);
   }
 
-  // Fetch dashboard data (combined /user + /get)
-  async function fetchDashboard() {
+  // Check token and fetch user info
+  async function checkAuthAndFetchUser() {
     const token = getToken();
     if (!token) {
-      console.error('No JWT token found for fetching dashboard');
+      console.error('No JWT token found in localStorage');
       redirectToLogin();
-      return { user: null, formConfigs: {}, submissions: [], templates: {}, isSubscribed: false, subscriptionDetails: null };
+      return null;
     }
 
     try {
-      $('#formsGrid').innerHTML = '<div class="loading">Loading dashboard</div>';
-      $('#formsCount').textContent = 'Loading...';
-
-      console.log('Fetching dashboard data from /dashboard');
-      const response = await fetch(`${BASE_URL}/dashboard`, {
+      console.log('Fetching user info from /user');
+      const response = await fetch(`${BASE_URL}/user`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -765,26 +762,75 @@
         credentials: 'omit'
       });
 
-      console.log(`Dashboard endpoint response status: ${response.status}`);
+      console.log(`User endpoint response status: ${response.status}`);
       if (!response.ok) {
         if (response.status === 401) {
-          console.error('Unauthorized: Invalid or expired token for /dashboard');
+          console.error('Unauthorized: Invalid or expired token');
           localStorage.removeItem('token');
           redirectToLogin();
         }
         const errorData = await response.json();
-        throw new Error(`Failed to fetch dashboard: ${errorData.error || response.statusText}`);
+        throw new Error(`Failed to fetch user: ${errorData.error || response.statusText}`);
       }
 
       const data = await response.json();
-      console.log('Dashboard data received:', data);
-      if (!data.user || !data.user.email || !data.user.id || !Array.isArray(data.submissions) || typeof data.formConfigs !== 'object' || typeof data.templates !== 'object') {
-        throw new Error('Invalid response format from /dashboard endpoint');
+      console.log('User data received:', data);
+      if (!data.user || !data.user.email || !data.user.id) {
+        console.error('User data missing or email/id not found:', data);
+        throw new Error('User email or ID not found in response');
       }
-
-      // Set global user info
       userEmail = data.user.email;
       userId = data.user.id;
+      return data.user;
+    } catch (error) {
+      console.error('Error fetching user info:', error.message);
+      localStorage.removeItem('token');
+      redirectToLogin();
+      return null;
+    }
+  }
+
+  // Fetch forms and subscriptions from backend
+  async function fetchForms() {
+    const token = getToken();
+    if (!token) {
+      console.error('No JWT token found for fetching forms');
+      redirectToLogin();
+      return { formConfigs: {}, submissions: [], templates: {}, isSubscribed: false, subscriptionDetails: null };
+    }
+
+    try {
+      $('#formsGrid').innerHTML = '<div class="loading">Loading forms</div>';
+      $('#formsCount').textContent = 'Loading...';
+
+      console.log('Fetching forms from /get');
+      const response = await fetch(`${BASE_URL}/get`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        mode: 'cors',
+        credentials: 'omit'
+      });
+
+      console.log(`Forms endpoint response status: ${response.status}`);
+      if (!response.ok) {
+        if (response.status === 401) {
+          console.error('Unauthorized: Invalid or expired token for /get');
+          localStorage.removeItem('token');
+          redirectToLogin();
+        }
+        const errorData = await response.json();
+        throw new Error(`Failed to fetch forms: ${errorData.error || response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Forms data received:', data);
+      if (!data || !Array.isArray(data.submissions) || typeof data.formConfigs !== 'object' || typeof data.templates !== 'object') {
+        throw new Error('Invalid response format from /get endpoint');
+      }
 
       // Store subscription status
       subscriptionStatus = {
@@ -809,16 +855,16 @@
 
       return data;
     } catch (error) {
-      console.error('Fetch dashboard error:', error.message);
+      console.error('Fetch forms error:', error.message);
       $('#formsGrid').innerHTML = `
         <div class="error">
-          Error loading dashboard: ${sanitize(error.message)}<br>
+          Error loading forms: ${sanitize(error.message)}<br>
           <small>Check browser console for details</small><br>
           <button class="btn" onclick="init()" style="margin-top: 10px;">Try Again</button>
         </div>
       `;
       $('#formsCount').textContent = 'Error';
-      return { user: null, formConfigs: {}, submissions: [], templates: {}, isSubscribed: false, subscriptionDetails: null };
+      return { formConfigs: {}, submissions: [], templates: {}, isSubscribed: false, subscriptionDetails: null };
     }
   }
 
@@ -990,7 +1036,7 @@
 
       const result = await response.json();
       console.log('Delete submission result:', result);
-      const updatedData = await fetchDashboard();
+      const updatedData = await fetchForms();
       showSubmissions(formId, updatedData.submissions, formName);
       init();
     } catch (error) {
@@ -1440,11 +1486,11 @@
   // Initialize
   async function init() {
     console.log('Initializing dashboard');
-    const data = await fetchDashboard();
-    if (!data.user) return;
+    const user = await checkAuthAndFetchUser();
+    if (!user) return;
 
     try {
-      const { formConfigs, submissions, templates, user } = data;
+      const { formConfigs, submissions, templates } = await fetchForms();
       renderForms(formConfigs, submissions, templates, user);
     } catch (error) {
       console.error('Initialization error:', error.message);
