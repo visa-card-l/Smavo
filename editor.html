@@ -1939,6 +1939,7 @@
       const response = await fetch(`${BASE_URL}/api/form/${formId}`, {
         method: 'GET',
         headers: {
+          'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': `Bearer ${token}`
         },
@@ -1981,27 +1982,18 @@
     }
 
     try {
-      // Change /user to /dashboard (your actual protected user endpoint)
-      const response = await fetch(`${BASE_URL}/dashboard`, {
+      const response = await fetch(`${BASE_URL}/user`, {
         method: 'GET',
         headers: {
+          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
         signal: AbortSignal.timeout(5000)
       });
 
       if (!response.ok) {
-        // Handle specific errors better (don't always clear token on non-401)
-        if (response.status === 401) {
-          localStorage.removeItem('token');
-          throw new Error('Invalid or expired token');
-        } else if (response.status === 404) {
-          throw new Error('User data not found');
-        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
-      // Optional: Parse response if you need user data early (e.g., const userData = await response.json();)
 
       formId = getQueryParam('formId');
       if (formId) {
@@ -2022,10 +2014,7 @@
       toggleButtonActionInputs();
     } catch (error) {
       console.error('Token validation failed:', error);
-      // Only clear token on explicit 401/auth errors
-      if (error.message.includes('401') || error.message.includes('expired') || error.message.includes('invalid')) {
-        localStorage.removeItem('token');
-      }
+      localStorage.removeItem('token');
       showMessagePopup('Session expired. Please log in again.');
       setTimeout(() => {
         redirectToLogin();
