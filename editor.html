@@ -1753,6 +1753,20 @@
     return '#00b7ff';
   }
 
+  function getCurrentColor(target) {
+    if (target === 'header') {
+      const span = selectedHeaderSpan || loginHeader.querySelector('span:not(.space):first-of-type');
+      return span ? colorToHex(span.style.color) : (document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000');
+    } else if (target === 'subheader') {
+      return colorToHex(loginSubheader.style.color);
+    } else if (target === 'border') {
+      return getBorderColor();
+    } else if (target === 'button') {
+      return getButtonColor();
+    }
+    return '#1f664e';
+  }
+
   function applyCustomColor(hex) {
     if (!currentCustomTarget) return;
     const color = hex;
@@ -1898,7 +1912,7 @@
     customOverlay.classList.add('show');
     setTimeout(() => {
       resizeCustomCanvas();
-      setPickerColor('#1f664e');
+      setPickerColor(getCurrentColor(target));
     }, 100);
   }
 
