@@ -21,9 +21,11 @@
     position: relative;
   }
 
+
   body.dark-mode {
     background: #1a1f2e;
   }
+
 
   body.saved-mode {
     display: flex;
@@ -34,9 +36,11 @@
     padding: 40px 20px 20px;
   }
 
+
   body.dark-mode.saved-mode {
     background: #1a1f2e;
   }
+
 
   .form-title {
     font-size: 1.8rem;
@@ -49,13 +53,16 @@
     -webkit-text-fill-color: transparent;
   }
 
+
   body.dark-mode .form-title {
     color: #f8f9fa;
   }
 
+
   body.saved-mode .form-title {
     display: none;
   }
+
 
   .template-instruction {
     font-size: 1rem;
@@ -73,14 +80,17 @@
     border-radius: 8px;
   }
 
+
   body.dark-mode .template-instruction {
     color: #f8f9fa;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   }
 
+
   body.saved-mode .template-instruction {
     display: none;
   }
+
 
   .template-selector-container {
     width: 100%;
@@ -88,9 +98,11 @@
     margin-bottom: 20px;
   }
 
+
   body.saved-mode .template-selector-container {
     display: none;
   }
+
 
   .theme-toggle {
     display: flex;
@@ -103,6 +115,7 @@
     cursor: pointer;
   }
 
+
   .theme-toggle label {
     font-size: 0.8rem;
     font-weight: 500;
@@ -110,13 +123,16 @@
     cursor: pointer;
   }
 
+
   body.dark-mode .theme-toggle label {
     color: #d1d5db;
   }
 
+
   .theme-toggle input[type="checkbox"] {
     display: none;
   }
+
 
   .theme-toggle .switch {
     position: relative;
@@ -127,6 +143,7 @@
     transition: background 0.3s ease;
     cursor: pointer;
   }
+
 
   .theme-toggle .switch::before {
     content: '';
@@ -140,13 +157,16 @@
     transition: transform 0.3s ease;
   }
 
+
   .theme-toggle input:checked + .switch {
     background: #00b7ff;
   }
 
+
   .theme-toggle input:checked + .switch::before {
     transform: translateX(20px);
   }
+
 
   #template-selector {
     width: 100%;
@@ -160,16 +180,19 @@
     transition: all 0.2s ease;
   }
 
+
   body.dark-mode #template-selector {
     background: #2f3b5a;
     color: #f8f9fa;
     box-shadow: 0 0 0 2px #6b7280;
   }
 
+
   #template-selector:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(0, 183, 255, 0.3);
   }
+
 
   .content-container {
     display: flex;
@@ -182,10 +205,12 @@
     transition: opacity 0.3s ease;
   }
 
+
   body.saved-mode .content-container {
     display: none;
     opacity: 0;
   }
+
 
   .login-container {
     background: white;
@@ -204,10 +229,12 @@
     opacity: 1;
   }
 
+
   body.dark-mode .login-container {
     background: #2f3b5a;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
+
 
   body.saved-mode .login-container {
     margin: 0 auto;
@@ -217,14 +244,17 @@
     animation: fadeIn 0.5s ease;
   }
 
+
   .login-container:hover {
     transform: scale(1.02);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   }
 
+
   body.dark-mode .login-container:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   }
+
 
   .login-container h2 {
     font-size: 1.8rem;
@@ -232,13 +262,16 @@
     color: #000000;
   }
 
+
   body.dark-mode .login-container h2 {
     color: #ffffff;
   }
 
+
   .login-container h2 span {
     color: inherit;
   }
+
 
   .login-container p {
     font-family: 'Inter', sans-serif;
@@ -247,9 +280,11 @@
     font-weight: 400;
   }
 
+
   body.dark-mode .login-container p {
     color: #d1d5db;
   }
+
 
   .login-container span {
     cursor: pointer;
@@ -259,6 +294,7 @@
     letter-spacing: 0.5px;
   }
 
+
   .login-container span.space {
     cursor: default;
     margin-right: 4px;
@@ -267,6 +303,7 @@
     display: inline-block;
   }
 
+
   .login-container span.selected {
     box-shadow: 0 0 0 2px #00b7ff;
     border-radius: 50%;
@@ -274,16 +311,19 @@
     box-sizing: border-box;
   }
 
+
   body.saved-mode .login-container span {
     cursor: default;
     pointer-events: none;
   }
+
 
   body.saved-mode .login-container h2,
   body.saved-mode .login-container p {
     cursor: default;
     pointer-events: none;
   }
+
 
   .login-container input, .login-container button {
     width: 100%;
@@ -295,11 +335,13 @@
     transition: all 0.2s ease;
   }
 
+
   .login-container input {
     border: none;
     box-shadow: 0 0 0 2px #000000;
     background: #f8f9fa;
   }
+
 
   body.dark-mode .login-container input {
     box-shadow: 0 0 0 2px #ffffff;
@@ -307,10 +349,12 @@
     color: #f8f9fa;
   }
 
+
   body.dark-mode .login-container input::placeholder {
     color: #b0b8cc;
     opacity: 1;
   }
+
 
   .login-container input:focus {
     outline: none;
@@ -318,17 +362,21 @@
     background: #ffffff;
   }
 
+
   body.dark-mode .login-container input:focus {
     background: #3b4a6b;
   }
+
 
   .login-container input:not(:placeholder-shown) {
     background: #ffffff;
   }
 
+
   body.dark-mode .login-container input:not(:placeholder-shown) {
     background: #3b4a6b;
   }
+
 
   .login-container button {
     background: linear-gradient(45deg, #00b7ff, #0078ff);
@@ -342,10 +390,12 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
+
   .login-container button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 183, 255, 0.5);
   }
+
 
   .customizer {
     background: #ffffff;
@@ -358,25 +408,30 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
   }
 
+
   body.dark-mode .customizer {
     background: #2f3b5a;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     scrollbar-color: #6b7280 #2f3b5a;
   }
 
+
   .customizer.hidden {
     display: none;
     opacity: 0;
   }
+
 
   .customizer:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   }
 
+
   body.dark-mode .customizer:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   }
+
 
   .customizer h3 {
     font-size: 1rem;
@@ -385,9 +440,11 @@
     margin-bottom: 12px;
   }
 
+
   body.dark-mode .customizer h3 {
     color: #f8f9fa;
   }
+
 
   .customizer-section {
     margin-bottom: 16px;
@@ -396,15 +453,18 @@
     margin-right: 8px;
   }
 
+
   body.dark-mode .customizer-section {
     border-bottom-color: #555;
   }
+
 
   .customizer-section:last-child {
     margin-bottom: 0;
     border-bottom: none;
     padding-bottom: 0;
   }
+
 
   .customizer h4 {
     color: #333333;
@@ -413,9 +473,11 @@
     margin-bottom: 8px;
   }
 
+
   body.dark-mode .customizer h4 {
     color: #f8f9fa;
   }
+
 
   .customizer label {
     display: block;
@@ -425,9 +487,11 @@
     color: #555555;
   }
 
+
   body.dark-mode .customizer label {
     color: #d1d5db;
   }
+
 
   .customizer input, .customizer select {
     margin-top: 4px;
@@ -442,21 +506,25 @@
     transition: all 0.2s ease;
   }
 
+
   body.dark-mode .customizer input, body.dark-mode .customizer select {
     background: #3b4a6b;
     box-shadow: 0 0 0 2px #6b7280;
     color: #f8f9fa;
   }
 
+
   .customizer input::placeholder, .customizer select::placeholder {
     color: #999999;
     opacity: 1;
   }
 
+
   body.dark-mode .customizer input::placeholder, body.dark-mode .customizer select::placeholder {
     color: #b0b8cc;
     opacity: 1;
   }
+
 
   .customizer input:focus, .customizer select:focus {
     outline: none;
@@ -464,9 +532,11 @@
     background: #ffffff;
   }
 
+
   body.dark-mode .customizer input:focus, body.dark-mode .customizer select:focus {
     background: #3b4a6b;
   }
+
 
   .customizer input[type="radio"] {
     width: auto;
@@ -475,12 +545,14 @@
     box-shadow: none;
   }
 
+
   .radio-group {
     display: flex;
     flex-direction: column;
     gap: 8px;
     margin-top: 8px;
   }
+
 
   .color-boxes {
     display: flex;
@@ -489,6 +561,7 @@
     width: calc(100% - 8px);
     flex-wrap: wrap;
   }
+
 
   .color-box {
     width: 28px;
@@ -499,30 +572,37 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
 
+
   .color-box[data-color="#FFFFFF"] {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), inset 0 0 0 1px #ccc;
   }
+
 
   body.dark-mode .color-box[data-color="#FFFFFF"] {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 0 0 1px #555;
   }
 
+
   .color-box[data-color="#000000"] {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), inset 0 0 0 1px #ccc;
   }
 
+
   body.dark-mode .color-box[data-color="#000000"] {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 0 0 1px #555;
   }
+
 
   .color-box:hover {
     transform: scale(1.1);
     box-shadow: 0 0 10px rgba(0, 183, 255, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2);
   }
 
+
   body.dark-mode .color-box:hover {
     box-shadow: 0 0 10px rgba(0, 183, 255, 0.4), 0 4px 12px rgba(0, 0, 0, 0.4);
   }
+
 
   .instructions {
     font-size: 0.75rem;
@@ -531,9 +611,11 @@
     line-height: 1.3;
   }
 
+
   body.dark-mode .instructions {
     color: #b0b8cc;
   }
+
 
   .color-button, .add-field-button, .remove-field-button {
     width: calc(100% - 8px);
@@ -548,10 +630,12 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
 
+
   .color-button, .add-field-button {
     background: linear-gradient(45deg, #00b7ff, #0078ff);
     color: white;
   }
+
 
   .color-button:hover, .add-field-button:hover {
     background: linear-gradient(45deg, #0078ff, #005bb5);
@@ -559,16 +643,19 @@
     box-shadow: 0 4px 12px rgba(0, 183, 255, 0.4);
   }
 
+
   .remove-field-button {
     background: linear-gradient(45deg, #DB4437, #B71C1C);
     color: white;
   }
+
 
   .remove-field-button:hover {
     background: linear-gradient(45deg, #B71C1C, #8B0000);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(219, 68, 55, 0.4);
   }
+
 
   .button-container {
     display: flex;
@@ -579,10 +666,12 @@
     margin-right: auto;
   }
 
+
   body.saved-mode .button-container {
     display: none;
     opacity: 0;
   }
+
 
   .save-button {
     width: 100%;
@@ -600,11 +689,13 @@
     overflow: hidden;
   }
 
+
   .save-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 183, 255, 0.4);
     background: linear-gradient(45deg, #0078ff, #005bb5);
   }
+
 
   .save-button::after {
     content: '';
@@ -619,10 +710,12 @@
     transition: width 0.3s ease, height 0.3s ease;
   }
 
+
   .save-button:hover::after {
     width: 200px;
     height: 200px;
   }
+
 
   .close-button {
     display: none;
@@ -642,10 +735,12 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
 
+
   body.dark-mode .close-button {
     background: #2f3b5a;
     color: #f8f9fa;
   }
+
 
   body.saved-mode .close-button {
     display: flex;
@@ -653,11 +748,13 @@
     justify-content: center;
   }
 
+
   .close-button:hover {
     color: #DB4437;
     transform: scale(1.1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
+
 
   .popup {
     display: none;
@@ -677,17 +774,20 @@
     border: 1px solid rgba(0, 183, 255, 0.1);
   }
 
+
   body.dark-mode .popup {
     background: #2f3b5a;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     border-color: rgba(0, 183, 255, 0.2);
   }
 
+
   .popup.show {
     display: block;
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
+
 
   .popup h4 {
     font-size: 1rem;
@@ -696,13 +796,16 @@
     margin-bottom: 12px;
   }
 
+
   body.dark-mode .popup h4 {
     color: #f8f9fa;
   }
 
+
   .popup .color-boxes {
     justify-content: center;
   }
+
 
   .popup p {
     font-size: 0.85rem;
@@ -711,9 +814,11 @@
     line-height: 1.4;
   }
 
+
   body.dark-mode .popup p {
     color: #d1d5db;
   }
+
 
   .popup-close {
     position: absolute;
@@ -727,13 +832,16 @@
     transition: color 0.2s ease;
   }
 
+
   body.dark-mode .popup-close {
     color: #f8f9fa;
   }
 
+
   .popup-close:hover {
     color: #00b7ff;
   }
+
 
   .overlay {
     display: none;
@@ -748,10 +856,12 @@
     transition: opacity 0.3s ease;
   }
 
+
   .overlay.show {
     display: block;
     opacity: 1;
   }
+
 
   .loading {
     display: none;
@@ -774,16 +884,19 @@
     opacity: 0;
   }
 
+
   .loading.show {
     display: flex;
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
 
+
   body.dark-mode .loading {
     background: #111827;
     color: #f8f9fa;
   }
+
 
   .loading .spinner {
     width: 20px;
@@ -794,15 +907,18 @@
     animation: spin 1s linear infinite;
   }
 
+
   #url-popup {
     max-width: 320px;
     padding: 24px;
     background: linear-gradient(145deg, #ffffff, #f1f5f9);
   }
 
+
   body.dark-mode #url-popup {
     background: linear-gradient(145deg, #2f3b5a, #1e2a44);
   }
+
 
   #url-popup p#url-text {
     font-size: 0.85rem;
@@ -815,11 +931,13 @@
     border: 1px solid #e5e7eb;
   }
 
+
   body.dark-mode #url-popup p#url-text {
     color: #f8f9fa;
     background: #3b4a6b;
     border-color: #4b5e8e;
   }
+
 
   .copy-button, .preview-button {
     width: 100%;
@@ -835,11 +953,13 @@
     overflow: hidden;
   }
 
+
   .copy-button {
     background: linear-gradient(45deg, #00b7ff, #0078ff);
     color: white;
     box-shadow: 0 2px 6px rgba(0, 183, 255, 0.3);
   }
+
 
   .copy-button:hover {
     transform: translateY(-2px);
@@ -847,9 +967,11 @@
     background: linear-gradient(45deg, #0078ff, #005bb5);
   }
 
+
   .copy-button.copied {
     background: linear-gradient(45deg, #10b981, #047857);
   }
+
 
   .copy-button.copied::after {
     content: '✓';
@@ -862,9 +984,11 @@
     animation: checkmark 0.3s ease forwards;
   }
 
+
   .copy-button.copied span {
     opacity: 0;
   }
+
 
   .preview-button {
     background: linear-gradient(45deg, #00b7ff, #0078ff);
@@ -872,11 +996,13 @@
     box-shadow: 0 2px 6px rgba(0, 183, 255, 0.3);
   }
 
+
   .preview-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 183, 255, 0.4);
     background: linear-gradient(45deg, #0078ff, #005bb5);
   }
+
 
   /* Custom Color Picker Styles */
   .picker {
@@ -888,10 +1014,12 @@
     max-width: 250px;
   }
 
+
   body.dark-mode .picker {
     background: #2f3b5a;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
   }
+
 
   .top-section {
     display: flex;
@@ -899,10 +1027,12 @@
     margin-bottom: 6px;
   }
 
+
   .preview-section,
   .color-section {
     flex: 1;
   }
+
 
   .preview {
     width: 100%;
@@ -912,6 +1042,7 @@
     background-color: #1f664e;
   }
 
+
   .preview-label {
     text-align: center;
     margin-bottom: 2px;
@@ -920,9 +1051,11 @@
     color: #333;
   }
 
+
   body.dark-mode .preview-label {
     color: #d1d5db;
   }
+
 
   .color-area {
     width: 100%;
@@ -932,6 +1065,7 @@
     margin-bottom: 6px;
   }
 
+
   .color-area-label {
     text-align: center;
     margin-bottom: 2px;
@@ -940,9 +1074,11 @@
     color: #333;
   }
 
+
   body.dark-mode .color-area-label {
     color: #d1d5db;
   }
+
 
   #custom-colorCanvas {
     display: block;
@@ -951,6 +1087,7 @@
     border-radius: 3px;
     cursor: crosshair;
   }
+
 
   .color-dot {
     width: 12px;
@@ -962,9 +1099,11 @@
     transform: translate(-6px, -6px);
   }
 
+
   body.dark-mode .color-dot {
     border-color: #fff;
   }
+
 
   input[type="range"] {
     width: 100%;
@@ -976,9 +1115,11 @@
     margin-bottom: 6px;
   }
 
+
   body.dark-mode input[type="range"] {
     background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
   }
+
 
   .hue-label {
     text-align: center;
@@ -988,9 +1129,11 @@
     color: #333;
   }
 
+
   body.dark-mode .hue-label {
     color: #d1d5db;
   }
+
 
   .hex {
     display: flex;
@@ -1001,9 +1144,11 @@
     border-radius: 3px;
   }
 
+
   body.dark-mode .hex {
     background: #3b4a6b;
   }
+
 
   .hex input {
     background: white;
@@ -1016,19 +1161,23 @@
     border-radius: 2px;
   }
 
+
   body.dark-mode .hex input {
     background: #3b4a6b;
     border: 1px solid #6b7280;
     color: #f8f9fa;
   }
 
+
   .hex span {
     color: #333;
   }
 
+
   body.dark-mode .hex span {
     color: #f8f9fa;
   }
+
 
   .copy {
     cursor: pointer;
@@ -1037,9 +1186,11 @@
     font-size: 12px;
   }
 
+
   body.dark-mode .copy {
     color: #10b981;
   }
+
 
   @media (max-width: 768px) {
     body {
@@ -1049,14 +1200,17 @@
       padding: 30px 16px 16px;
     }
 
+
     body.saved-mode {
       padding: 30px 16px 16px;
     }
+
 
     .form-title {
       font-size: 1.4rem;
       margin-bottom: 16px;
     }
+
 
     .template-instruction {
       font-size: 0.9rem;
@@ -1064,9 +1218,11 @@
       max-width: 300px;
     }
 
+
     .template-selector-container {
       max-width: 300px;
     }
+
 
     .content-container {
       flex-direction: column;
@@ -1074,10 +1230,12 @@
       gap: 16px;
     }
 
+
     .login-container, .customizer, .button-container {
       width: 100%;
       max-width: 300px;
     }
+
 
     .login-container {
       height: auto;
@@ -1085,24 +1243,29 @@
       padding: 16px;
     }
 
+
     .login-container h2 {
       font-size: 1.6rem;
     }
+
 
     .login-container input, .login-container button {
       padding: 12px;
       font-size: 0.9rem;
     }
 
+
     .login-container button {
       padding: 14px;
       border-radius: 50px;
     }
 
+
     .customizer {
       max-height: 260px;
       padding: 16px 16px 16px 12px;
     }
+
 
     .button-container {
       width: 100%;
@@ -1110,10 +1273,12 @@
       margin-top: 12px;
     }
 
+
     .save-button {
       padding: 12px;
       font-size: 0.9rem;
     }
+
 
     .close-button {
       top: 12px;
@@ -1123,43 +1288,52 @@
       font-size: 1.2rem;
     }
 
+
     .popup {
       width: 80%;
       max-width: 280px;
       padding: 16px;
     }
 
+
     .loading {
       font-size: 0.85rem;
       padding: 12px 20px;
     }
 
+
     #url-popup {
       padding: 20px;
     }
 
+
     #url-popup p#url-text {
       font-size: 0.8rem;
     }
+
 
     .copy-button, .preview-button {
       font-size: 0.85rem;
       padding: 10px;
     }
 
+
     @media (max-width: 480px) {
       .picker {
         padding: 6px;
       }
 
+
       .top-section {
         gap: 4px;
       }
+
 
       .preview,
       .color-area {
         height: 60px;
       }
+
 
       .preview-label,
       .color-area-label,
@@ -1167,10 +1341,12 @@
         font-size: 9px;
       }
 
+
       .hex input {
         width: 40px;
         font-size: 10px;
       }
+
 
       .color-dot {
         width: 10px;
@@ -1181,21 +1357,25 @@
     }
   }
 
+
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
 
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
+
   @keyframes checkmark {
     0% { transform: translate(-50%, -50%) scale(0); }
     50% { transform: translate(-50%, -50%) scale(1.2); }
     100% { transform: translate(-50%, -50%) scale(1); }
   }
+
 
   @media (max-width: 768px) {
     body {
@@ -1205,14 +1385,17 @@
       padding: 30px 16px 16px;
     }
 
+
     body.saved-mode {
       padding: 30px 16px 16px;
     }
+
 
     .form-title {
       font-size: 1.4rem;
       margin-bottom: 16px;
     }
+
 
     .template-instruction {
       font-size: 0.9rem;
@@ -1220,9 +1403,11 @@
       max-width: 300px;
     }
 
+
     .template-selector-container {
       max-width: 300px;
     }
+
 
     .content-container {
       flex-direction: column;
@@ -1230,10 +1415,12 @@
       gap: 16px;
     }
 
+
     .login-container, .customizer, .button-container {
       width: 100%;
       max-width: 300px;
     }
+
 
     .login-container {
       height: auto;
@@ -1241,24 +1428,29 @@
       padding: 16px;
     }
 
+
     .login-container h2 {
       font-size: 1.6rem;
     }
+
 
     .login-container input, .login-container button {
       padding: 12px;
       font-size: 0.9rem;
     }
 
+
     .login-container button {
       padding: 14px;
       border-radius: 50px;
     }
 
+
     .customizer {
       max-height: 260px;
       padding: 16px 16px 16px 12px;
     }
+
 
     .button-container {
       width: 100%;
@@ -1266,10 +1458,12 @@
       margin-top: 12px;
     }
 
+
     .save-button {
       padding: 12px;
       font-size: 0.9rem;
     }
+
 
     .close-button {
       top: 12px;
@@ -1279,24 +1473,29 @@
       font-size: 1.2rem;
     }
 
+
     .popup {
       width: 80%;
       max-width: 280px;
       padding: 16px;
     }
 
+
     .loading {
       font-size: 0.85rem;
       padding: 12px 20px;
     }
 
+
     #url-popup {
       padding: 20px;
     }
 
+
     #url-popup p#url-text {
       font-size: 0.8rem;
     }
+
 
     .copy-button, .preview-button {
       font-size: 0.85rem;
@@ -1304,11 +1503,13 @@
     }
   }
 
+
   @media (max-width: 480px) {
     .form-title {
       font-size: 1.2rem;
       margin-bottom: 12px;
     }
+
 
     .template-instruction {
       font-size: 0.85rem;
@@ -1316,63 +1517,77 @@
       max-width: 280px;
     }
 
+
     .login-container h2 {
       font-size: 1.4rem;
     }
 
+
     .login-container p {
       font-size: 0.8rem;
     }
+
 
     .login-container input, .login-container button {
       font-size: 0.85rem;
       padding: 10px;
     }
 
+
     .login-container button {
       padding: 12px;
       border-radius: 50px;
     }
 
+
     .customizer h3 {
       font-size: 0.9rem;
     }
 
+
     .customizer label {
       font-size: 0.75rem;
     }
+
 
     .customizer input, .customizer select {
       font-size: 0.8rem;
       padding: 8px;
     }
 
+
     .color-button, .add-field-button, .remove-field-button {
       font-size: 0.8rem;
       padding: 8px;
     }
+
 
     .save-button {
       font-size: 0.85rem;
       padding: 10px;
     }
 
+
     .login-container, .customizer, .button-container {
       max-width: 280px;
     }
+
 
     .theme-toggle {
       gap: 6px;
     }
 
+
     .theme-toggle label {
       font-size: 0.75rem;
     }
+
 
     .theme-toggle .switch {
       width: 36px;
       height: 18px;
     }
+
 
     .theme-toggle .switch::before {
       width: 14px;
@@ -1381,22 +1596,27 @@
       left: 2px;
     }
 
+
     .theme-toggle input:checked + .switch::before {
       transform: translateX(18px);
     }
+
 
     .loading {
       font-size: 0.8rem;
       padding: 10px 16px;
     }
 
+
     #url-popup {
       max-width: 260px;
     }
 
+
     #url-popup p#url-text {
       font-size: 0.75rem;
     }
+
 
     .copy-button, .preview-button {
       font-size: 0.8rem;
@@ -1557,13 +1777,16 @@
     <span>Saving Form...</span>
   </div>
 
+
 <script>
   // Utilities
   const $ = sel => document.querySelector(sel);
   const $$ = sel => document.querySelectorAll(sel);
 
+
   // Base URL for backend
   const BASE_URL = 'https://smav.onrender.com';
+
 
   // Template definitions
   const templates = {
@@ -1603,8 +1826,10 @@
     }
   };
 
+
   let currentTemplate = 'sign-in';
   let formId = null; // Track formId for editing existing forms
+
 
   // DOM elements
   const headerInput = $('#custom-header');
@@ -1649,6 +1874,7 @@
   const copyButton = $('#copy-button');
   const previewButton = $('#preview-button');
 
+
   // Custom color picker elements
   const customColorPopup = $('#custom-color-popup');
   const customOverlay = $('#custom-overlay');
@@ -1662,6 +1888,7 @@
   const customDot = $('#custom-dot');
   const customCopy = $('#custom-copy');
 
+
   let selectedHeaderSpan = null;
   let currentColorTarget = null;
   let currentCustomTarget = null;
@@ -1669,8 +1896,10 @@
   let headerColorsArray = [];
   const examplePlaceholders = ['e.g., Address', 'e.g., Country', 'e.g., Phone Number', 'e.g., City', 'e.g., Zip Code'];
 
+
   // Custom picker vars
   let customHueValue = 160, customSaturation = 0.7, customBrightness = 0.4;
+
 
   // Color utility functions
   function hsbToRgb(h, s, b) {
@@ -1681,10 +1910,12 @@
     return rgb;
   }
 
+
   function hsbToHex(h, s, b) {
     const [r, g, bb] = hsbToRgb(h, s, b);
     return "#" + [r, g, bb].map(x => x.toString(16).padStart(2, "0")).join("");
   }
+
 
   function hexToRgb(hex) {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -1694,6 +1925,7 @@
       b: parseInt(result[3], 16)
     } : null;
   }
+
 
   function rgbToHsb(r, g, b) {
     r /= 255; g /= 255; b /= 255;
@@ -1714,6 +1946,7 @@
     return { h: h * 360, s: s, v: v };
   }
 
+
   function colorToHex(colorStr) {
     if (!colorStr || colorStr === 'transparent' || colorStr === '') return document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
     if (colorStr.startsWith('#')) return colorStr;
@@ -1730,6 +1963,7 @@
     return document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
   }
 
+
   function getBorderColor() {
     const inp = inputFieldsContainer.querySelector('input');
     if (!inp) return document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
@@ -1745,6 +1979,7 @@
     return document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
   }
 
+
   function getButtonColor() {
     let bg = loginButton.style.background;
     if (bg && !bg.includes('linear-gradient')) {
@@ -1753,19 +1988,6 @@
     return '#00b7ff';
   }
 
-  function getCurrentColor(target) {
-    if (target === 'header') {
-      const span = selectedHeaderSpan || loginHeader.querySelector('span:not(.space):first-of-type');
-      return span ? colorToHex(span.style.color) : (document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000');
-    } else if (target === 'subheader') {
-      return colorToHex(loginSubheader.style.color);
-    } else if (target === 'border') {
-      return getBorderColor();
-    } else if (target === 'button') {
-      return getButtonColor();
-    }
-    return '#1f664e';
-  }
 
   function applyCustomColor(hex) {
     if (!currentCustomTarget) return;
@@ -1799,11 +2021,13 @@
     }
   }
 
+
   // Custom picker functions
   function resizeCustomCanvas() {
     customCanvas.width = customColorArea.clientWidth;
     customCanvas.height = customColorArea.clientHeight;
   }
+
 
   function customPositionDot() {
     const rect = customColorArea.getBoundingClientRect();
@@ -1812,6 +2036,7 @@
     customDot.style.left = `${x}px`;
     customDot.style.top = `${y}px`;
   }
+
 
   function customDrawColorArea(h) {
     const ctx = customCanvas.getContext('2d');
@@ -1833,11 +2058,13 @@
     ctx.putImageData(imageData, 0, 0);
   }
 
+
   function customUpdateVisuals() {
     const hex = hsbToHex(customHueValue, customSaturation, customBrightness);
     customPreview.style.background = hex;
     customDrawColorArea(customHueValue);
   }
+
 
   function customUpdate() {
     customUpdateVisuals();
@@ -1846,6 +2073,7 @@
     applyCustomColor(hex);
   }
 
+
   function getClientPos(e) {
     if (e.touches && e.touches.length > 0) {
       return { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -1853,6 +2081,7 @@
       return { x: e.clientX, y: e.clientY };
     }
   }
+
 
   function customHandleStart(e) {
     e.preventDefault();
@@ -1873,10 +2102,12 @@
     };
     move(e);
 
+
     const handleMove = (ev) => {
       ev.preventDefault();
       move(ev);
     };
+
 
     const handleEnd = (ev) => {
       ev.preventDefault();
@@ -1886,11 +2117,13 @@
       document.removeEventListener("touchend", handleEnd);
     };
 
+
     document.addEventListener("mousemove", handleMove, { passive: false });
     document.addEventListener("touchmove", handleMove, { passive: false });
     document.addEventListener("mouseup", handleEnd, { once: true });
     document.addEventListener("touchend", handleEnd, { once: true });
   }
+
 
   function setPickerColor(hex) {
     const rgb = hexToRgb(hex);
@@ -1905,6 +2138,7 @@
     customUpdate();
   }
 
+
   function openCustomPicker(target) {
     currentCustomTarget = target;
     customPopupTitle.textContent = `Custom ${target.charAt(0).toUpperCase() + target.slice(1)} Color`;
@@ -1912,9 +2146,10 @@
     customOverlay.classList.add('show');
     setTimeout(() => {
       resizeCustomCanvas();
-      setPickerColor(getCurrentColor(target));
+      setPickerColor('#1f664e');
     }, 100);
   }
+
 
   function hideCustomColorPopup() {
     customColorPopup.classList.remove('show');
@@ -1922,13 +2157,16 @@
     currentCustomTarget = null;
   }
 
+
   // Ensure loading indicator is hidden on page load
   loadingIndicator.classList.remove('show');
+
 
   // Get token from localStorage
   function getToken() {
     return localStorage.getItem('token');
   }
+
 
   // Get query parameter
   function getQueryParam(name) {
@@ -1936,10 +2174,12 @@
     return urlParams.get(name);
   }
 
+
   // Redirect to login if no token
   function redirectToLogin() {
     window.location.href = 'login.html';
   }
+
 
   // Updated fetchFormData to use /api/form/:id endpoint
   async function fetchFormData(formId) {
@@ -1948,6 +2188,7 @@
       redirectToLogin();
       return null;
     }
+
 
     try {
       const response = await fetch(`${BASE_URL}/api/form/${formId}`, {
@@ -1962,6 +2203,7 @@
         signal: AbortSignal.timeout(5000)
       });
 
+
       if (!response.ok) {
         if (response.status === 401) {
           localStorage.removeItem('token');
@@ -1975,6 +2217,7 @@
         throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
       }
 
+
       const data = await response.json();
       if (!data || !data.template) {
         throw new Error('Invalid form data received from server');
@@ -1987,6 +2230,7 @@
     }
   }
 
+
   // Validate token and initialize
   async function validateAndInit() {
     const token = getToken();
@@ -1994,6 +2238,7 @@
       redirectToLogin();
       return;
     }
+
 
     try {
       const response = await fetch(`${BASE_URL}/user`, {
@@ -2005,9 +2250,11 @@
         signal: AbortSignal.timeout(5000)
       });
 
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+
 
       formId = getQueryParam('formId');
       if (formId) {
@@ -2036,6 +2283,7 @@
     }
   }
 
+
   function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -2048,12 +2296,14 @@
     };
   }
 
+
   function normalizeUrl(url) {
     if (!url) return null;
     if (url.match(/^https?:\/\//)) return url;
     if (url.match(/\.[a-z]{2,}$/i)) return `https://${url}`;
     return null;
   }
+
 
   function updateHeaderText(text) {
     loginHeader.innerHTML = '';
@@ -2096,12 +2346,14 @@
     }
   }
 
+
   function clearHeaderSelection() {
     if (selectedHeaderSpan) {
       selectedHeaderSpan.classList.remove('selected');
       selectedHeaderSpan = null;
     }
   }
+
 
   function updateSubheaderText(text) {
     loginSubheader.textContent = text || 'fill the form';
@@ -2110,6 +2362,7 @@
     }
   }
 
+
   function showColorPopup(target, title) {
     currentColorTarget = target;
     popupTitle.textContent = title;
@@ -2117,11 +2370,13 @@
     colorOverlay.classList.add('show');
   }
 
+
   function hideColorPopup() {
     colorPopup.classList.remove('show');
     colorOverlay.classList.remove('show');
     currentColorTarget = null;
   }
+
 
   function showMessagePopup(message) {
     messageText.textContent = message || 'Welcome! You have clicked the button.';
@@ -2129,16 +2384,19 @@
     messageOverlay.classList.add('show');
   }
 
+
   function hideMessagePopup() {
     messagePopup.classList.remove('show');
     messageOverlay.classList.remove('show');
   }
+
 
   function showUrlPopup(url) {
     urlText.textContent = url;
     urlPopup.classList.add('show');
     urlOverlay.classList.add('show');
   }
+
 
   function hideUrlPopup() {
     urlPopup.classList.remove('show');
@@ -2147,17 +2405,20 @@
     copyButton.classList.remove('copied');
   }
 
+
   function toggleButtonActionInputs() {
     const action = document.querySelector('input[name="button-action"]:checked').value;
     buttonUrlInput.disabled = action !== 'url';
     buttonMessageInput.disabled = action !== 'message';
   }
 
+
   function addNewField() {
     fieldCounter++;
     const fieldId = `field-${fieldCounter}`;
     const defaultPlaceholder = `Field ${fieldCounter}`;
     const examplePlaceholder = examplePlaceholders[(fieldCounter - templates[currentTemplate].fields.length - 1) % examplePlaceholders.length] || `e.g., Field ${fieldCounter}`;
+
 
     const newInput = document.createElement('input');
     newInput.type = 'text';
@@ -2166,6 +2427,7 @@
     newInput.style.boxShadow = inputFieldsContainer.querySelector('input')?.style.boxShadow || 
         (document.body.classList.contains('dark-mode') ? '0 0 0 2px #ffffff' : '0 0 0 2px #000000');
     inputFieldsContainer.appendChild(newInput);
+
 
     const fieldContainer = document.createElement('div');
     fieldContainer.className = 'field-container';
@@ -2177,11 +2439,13 @@
     `;
     placeholderInputsContainer.appendChild(fieldContainer);
 
+
     const placeholderInput = document.getElementById(`${fieldId}-placeholder`);
     placeholderInput.addEventListener('input', () => {
       const loginInput = document.getElementById(`login-${fieldId}`);
       loginInput.placeholder = placeholderInput.value || defaultPlaceholder;
     });
+
 
     const removeButton = fieldContainer.querySelector('.remove-field-button');
     removeButton.addEventListener('click', () => {
@@ -2190,8 +2454,10 @@
       updateLoginContainerHeight();
     });
 
+
     updateLoginContainerHeight();
   }
+
 
   function updateLoginContainerHeight() {
     const inputCount = inputFieldsContainer.children.length;
@@ -2201,11 +2467,13 @@
     loginContainer.style.minHeight = `${baseHeight + additionalHeight}px`;
   }
 
+
   async function saveForm() {
     const templateFields = templates[currentTemplate].fields.map(field => ({
       id: field.id,
       placeholder: document.getElementById(`${field.id}-placeholder`)?.value || field.placeholder
     }));
+
 
     const customFields = Array.from(placeholderInputsContainer.querySelectorAll('.field-container'))
       .filter(container => !templates[currentTemplate].fields.some(field => field.id === container.dataset.fieldId))
@@ -2213,6 +2481,7 @@
         id: container.dataset.fieldId,
         placeholder: document.getElementById(`${container.dataset.fieldId}-placeholder`).value || `Field`
       }));
+
 
     const state = {
       template: currentTemplate,
@@ -2231,14 +2500,17 @@
       theme: document.body.classList.contains('dark-mode') ? 'dark' : 'light'
     };
 
+
     const token = getToken();
     if (!token) {
       redirectToLogin();
       return;
     }
 
+
     document.querySelector('.content-container').style.opacity = '0';
     loadingIndicator.classList.add('show');
+
 
     try {
       const controller = new AbortController();
@@ -2257,6 +2529,7 @@
         credentials: 'omit'
       });
       clearTimeout(timeoutId);
+
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -2279,6 +2552,7 @@
         }
         throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
+
 
       const data = await response.json();
       loadingIndicator.classList.remove('show');
@@ -2311,6 +2585,7 @@
     }
   }
 
+
   function enterCreatedMode() {
     clearHeaderSelection();
     document.body.classList.add('saved-mode');
@@ -2321,6 +2596,7 @@
     updateHeaderText(headerInput.value || 'my form');
     updateSubheaderText(subheaderInput.value || 'fill the form');
   }
+
 
   function exitCreatedMode() {
     document.body.classList.remove('saved-mode');
@@ -2333,9 +2609,11 @@
     updateHeaderText(headerInput.value || 'my form');
   }
 
+
   function checkFormFilled() {
     const inputs = inputFieldsContainer.querySelectorAll('input');
     const templateFields = templates[currentTemplate].fields;
+
 
     for (let i = 0; i < inputs.length; i++) {
       const input = inputs[i];
@@ -2343,10 +2621,12 @@
       const fieldId = input.id.replace('login-', '');
       const templateField = templateFields.find(field => field.id === fieldId);
 
+
       if (!value) {
         showMessagePopup('Please fill all fields before proceeding.');
         return false;
       }
+
 
       if (templateField && templateField.validation && templateField.validation.regex) {
         if (!templateField.validation.regex.test(value)) {
@@ -2357,6 +2637,7 @@
     }
     return true;
   }
+
 
   function loadFormState(state) {
     currentTemplate = state.template || 'sign-in';
@@ -2369,9 +2650,11 @@
     headerColorsArray = state.headerColors || [];
     document.body.classList.toggle('dark-mode', state.theme === 'dark');
 
+
     inputFieldsContainer.innerHTML = '';
     placeholderInputsContainer.innerHTML = '';
     fieldCounter = 0;
+
 
     state.placeholders.forEach((field, index) => {
       fieldCounter++;
@@ -2384,6 +2667,7 @@
       newInput.style.boxShadow = state.borderShadow || (document.body.classList.contains('dark-mode') ? '0 0 0 2px #ffffff' : '0 0 0 2px #000000');
       inputFieldsContainer.appendChild(newInput);
 
+
       const fieldContainer = document.createElement('div');
       fieldContainer.className = 'field-container';
       fieldContainer.dataset.fieldId = fieldId;
@@ -2394,11 +2678,13 @@
       `;
       placeholderInputsContainer.appendChild(fieldContainer);
 
+
       const placeholderInput = document.getElementById(`${fieldId}-placeholder`);
       placeholderInput.addEventListener('input', () => {
         const loginInput = document.getElementById(`login-${fieldId}`);
         loginInput.placeholder = placeholderInput.value || field.placeholder;
       });
+
 
       const removeButton = fieldContainer.querySelector('.remove-field-button');
       removeButton.addEventListener('click', () => {
@@ -2407,6 +2693,7 @@
         updateLoginContainerHeight();
       });
     });
+
 
     loginButton.style.background = state.buttonColor || 'linear-gradient(45deg, #00b7ff, #0078ff)';
     loginButton.style.color = state.buttonTextColor || (state.buttonColor === '#ffffff' ? '#000000' : '#ffffff');
@@ -2421,12 +2708,14 @@
     updateLoginContainerHeight();
   }
 
+
   function loadTemplate(templateId) {
     currentTemplate = templateId;
     formTitle.textContent = templates[templateId].name;
     inputFieldsContainer.innerHTML = '';
     placeholderInputsContainer.innerHTML = '';
     fieldCounter = templates[templateId].fields.length;
+
 
     templates[templateId].fields.forEach((field, index) => {
       const newInput = document.createElement('input');
@@ -2435,6 +2724,7 @@
       newInput.placeholder = field.placeholder;
       newInput.style.boxShadow = document.body.classList.contains('dark-mode') ? '0 0 0 2px #ffffff' : '0 0 0 2px #000000';
       inputFieldsContainer.appendChild(newInput);
+
 
       const fieldContainer = document.createElement('div');
       fieldContainer.className = 'field-container';
@@ -2445,12 +2735,14 @@
       `;
       placeholderInputsContainer.appendChild(fieldContainer);
 
+
       const placeholderInput = document.getElementById(`${field.id}-placeholder`);
       placeholderInput.addEventListener('input', () => {
         const loginInput = document.getElementById(`login-${field.id}`);
         loginInput.placeholder = placeholderInput.value || field.placeholder;
       });
     });
+
 
     loginButton.textContent = templates[templateId].buttonText;
     loginButton.style.background = 'linear-gradient(45deg, #00b7ff, #0078ff)';
@@ -2462,6 +2754,7 @@
     toggleButtonActionInputs();
     updateLoginContainerHeight();
   }
+
 
   // Event listeners
   themeToggleContainer.addEventListener('click', debounce(() => {
@@ -2476,31 +2769,38 @@
     });
   }, 200));
 
+
   document.addEventListener('click', (e) => {
     if (!loginHeader.contains(e.target) && !document.body.classList.contains('saved-mode')) {
       clearHeaderSelection();
     }
   });
 
+
   headerInput.addEventListener('input', () => {
     const text = headerInput.value || 'my form';
     updateHeaderText(text);
   });
+
 
   subheaderInput.addEventListener('input', () => {
     const text = subheaderInput.value || 'fill the form';
     updateSubheaderText(text);
   });
 
+
   buttonTextInput.addEventListener('input', () => {
     loginButton.textContent = buttonTextInput.value || templates[currentTemplate].buttonText;
   });
 
+
   addFieldButton.addEventListener('click', addNewField);
+
 
   buttonActionRadios.forEach(radio => {
     radio.addEventListener('change', toggleButtonActionInputs);
   });
+
 
   loginButton.addEventListener('click', () => {
     if (!checkFormFilled()) {
@@ -2518,6 +2818,7 @@
       showMessagePopup(buttonMessageInput.value);
     }
   });
+
 
   headerColors.querySelectorAll('.color-box').forEach(box => {
     box.addEventListener('click', () => {
@@ -2540,6 +2841,7 @@
     });
   });
 
+
   subheaderColors.querySelectorAll('.color-box').forEach(box => {
     box.addEventListener('click', () => {
       const color = box.getAttribute('data-color');
@@ -2547,13 +2849,16 @@
     });
   });
 
+
   borderColorButton.addEventListener('click', () => {
     showColorPopup('border', 'Select Border Color');
   });
 
+
   buttonColorButton.addEventListener('click', () => {
     showColorPopup('button', 'Select Button Color');
   });
+
 
   // Custom color buttons
   $('#custom-header-color-btn').addEventListener('click', () => openCustomPicker('header'));
@@ -2561,8 +2866,10 @@
   $('#custom-border-color-btn').addEventListener('click', () => openCustomPicker('border'));
   $('#custom-button-color-btn').addEventListener('click', () => openCustomPicker('button'));
 
+
   popupClose.addEventListener('click', hideColorPopup);
   colorOverlay.addEventListener('click', hideColorPopup);
+
 
   colorBoxes.querySelectorAll('.color-box').forEach(box => {
     box.addEventListener('click', () => {
@@ -2580,11 +2887,13 @@
     });
   });
 
+
   // Custom picker listeners
   customHue.addEventListener("input", e => {
     customHueValue = parseFloat(e.target.value);
     customUpdate();
   });
+
 
   customHexInput.addEventListener('input', (e) => {
     const inputVal = e.target.value.toUpperCase();
@@ -2606,8 +2915,10 @@
     }
   });
 
+
   customCanvas.addEventListener("mousedown", customHandleStart);
   customCanvas.addEventListener("touchstart", customHandleStart, { passive: false });
+
 
   customCopy.addEventListener("click", () => {
     navigator.clipboard.writeText(customHexInput.value);
@@ -2615,21 +2926,26 @@
     setTimeout(() => customCopy.textContent = "📋", 1000);
   });
 
+
   customPopupClose.addEventListener('click', hideCustomColorPopup);
   customOverlay.addEventListener('click', hideCustomColorPopup);
 
+
   messagePopupClose.addEventListener('click', hideMessagePopup);
   messageOverlay.addEventListener('click', hideMessagePopup);
+
 
   urlPopupClose.addEventListener('click', () => {
     hideUrlPopup();
     window.location.href = 'dashboard.html';
   });
 
+
   urlOverlay.addEventListener('click', () => {
     hideUrlPopup();
     window.location.href = 'dashboard.html';
   });
+
 
   copyButton.addEventListener('click', async () => {
     const url = urlText.textContent;
@@ -2651,20 +2967,25 @@
     }
   });
 
+
   previewButton.addEventListener('click', () => {
     const url = urlText.textContent;
     window.open(url, '_blank');
   });
 
+
   saveButton.addEventListener('click', () => {
     saveForm();
   });
 
+
   closeButton.addEventListener('click', exitCreatedMode);
+
 
   templateSelector.addEventListener('change', () => {
     loadTemplate(templateSelector.value);
   });
+
 
   document.addEventListener('DOMContentLoaded', validateAndInit);
 </script>
