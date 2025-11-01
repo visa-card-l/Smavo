@@ -781,7 +781,7 @@
       }
       userEmail = data.user.email;
       userId = data.user.id;
-      return data.user;
+      return data;
     } catch (error) {
       console.error('Error fetching user info:', error.message);
       localStorage.removeItem('token');
@@ -1483,20 +1483,43 @@
     }
   }
 
-  // Initialize
+  // Updated init() – parallel fetches
   async function init() {
-    console.log('Initializing dashboard');
-    const user = await checkAuthAndFetchUser();
-    if (!user) return;
+    console.log('Initializing dashboard in parallel');
+    const token = getToken();
+    if (!token) {
+      console.error('No JWT token found');
+      redirectToLogin();
+      return;
+    }
+
+    // Set initial loading state immediately
+    $('#formsGrid').innerHTML = '<div class="loading">Loading dashboard</div>';
+    $('#formsCount').textContent = 'Loading...';
 
     try {
-      const { formConfigs, submissions, templates } = await fetchForms();
-      renderForms(formConfigs, submissions, templates, user);
+      // Parallel: Fetch user AND forms at once
+      const [userResponse, formsData] = await Promise.all([
+        checkAuthAndFetchUser(),  // Returns { user: { id, username, email, createdAt } } or null
+        fetchForms()              // Returns { formConfigs, submissions, templates, isSubscribed, subscriptionDetails }
+      ]);
+
+      const user = userResponse?.user || null;
+      if (!user) {
+        console.error('Failed to fetch user data');
+        // Still render forms if available, but with fallback greeting
+        renderForms(formsData.formConfigs || {}, formsData.submissions || [], formsData.templates || {}, null);
+        return;
+      }
+
+      // Both succeeded – full render
+      renderForms(formsData.formConfigs || {}, formsData.submissions || [], formsData.templates || {}, user);
     } catch (error) {
-      console.error('Initialization error:', error.message);
+      console.error('Parallel init error:', error.message);
       $('#formsGrid').innerHTML = `
         <div class="error">
-          Failed to initialize: ${sanitize(error.message)}
+          Failed to load dashboard: ${sanitize(error.message)}<br>
+          <button class="btn" onclick="init()" style="margin-top: 10px;">Retry</button>
         </div>
       `;
       clearInterval(window.tickInterval);
