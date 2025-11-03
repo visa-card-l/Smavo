@@ -397,6 +397,38 @@
   }
 
 
+  #footer-links {
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+  }
+
+  #forgot-container {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  #signup-container {
+    margin: 20px 0 0 0;
+    font-size: 0.9rem;
+    color: currentColor;
+    text-align: center;
+  }
+
+  body.dark-mode #signup-container {
+    color: #d1d5db;
+  }
+
+  #footer-links a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s ease;
+  }
+
+  #footer-links a:hover {
+    text-decoration: underline;
+  }
+
   .customizer {
     background: #ffffff;
     padding: 20px 20px 20px 12px;
@@ -551,6 +583,11 @@
     flex-direction: column;
     gap: 8px;
     margin-top: 8px;
+  }
+
+
+  .link-group {
+    margin-bottom: 12px;
   }
 
 
@@ -1642,6 +1679,14 @@
       <!-- Fields will be dynamically loaded -->
     </div>
     <button id="login-button">Sign In</button>
+    <div id="footer-links">
+      <div id="forgot-container" style="display: none;">
+        <a href="#" id="forgot-link"></a>
+      </div>
+      <p id="signup-container" style="display: none;">
+        <a href="#" id="signup-link"></a>
+      </p>
+    </div>
   </div>
   <div class="content-container">
     <div class="customizer">
@@ -1708,6 +1753,32 @@
           <label><input type="radio" name="button-action" value="message" aria-label="Show message popup"> Show Message Pop-Up</label>
           <input type="text" id="button-message" placeholder="Enter message" disabled aria-label="Button message">
         </div>
+      </div>
+      <div class="customizer-section">
+        <h4>Footer Links (Sign In only)</h4>
+        <div class="link-group">
+          <label>Forgot Password Text:</label>
+          <input type="text" id="forgot-text" placeholder="Forgot Password?">
+          <label>Forgot Password URL:</label>
+          <input type="text" id="forgot-url" placeholder="Enter URL (e.g., /forgot-password)">
+        </div>
+        <div class="link-group">
+          <label>Sign Up Text:</label>
+          <input type="text" id="signup-text" placeholder="Sign Up">
+          <label>Sign Up URL:</label>
+          <input type="text" id="signup-url" placeholder="Enter URL (e.g., /sign-up)">
+        </div>
+        <label>Footer Link Color:</label>
+        <div class="color-boxes" id="footer-colors">
+          <div class="color-box" style="background-color: #4285F4;" data-color="#4285F4"></div>
+          <div class="color-box" style="background-color: #DB4437;" data-color="#DB4437"></div>
+          <div class="color-box" style="background-color: #f59e0b;" data-color="#f59e0b"></div>
+          <div class="color-box" style="background-color: #10b981;" data-color="#10b981"></div>
+          <div class="color-box" style="background-color: #1e3a8a;" data-color="#1e3a8a"></div>
+          <div class="color-box" style="background-color: #ffffff;" data-color="#ffffff"></div>
+          <div class="color-box" style="background-color: #000000;" data-color="#000000"></div>
+        </div>
+        <button class="color-button" id="custom-footer-color-btn">or pick custom color</button>
       </div>
     </div>
     <div class="button-container">
@@ -1799,7 +1870,12 @@
       buttonText: "Sign In",
       buttonAction: "url",
       buttonUrl: "",
-      buttonMessage: ""
+      buttonMessage: "",
+      forgotText: "Forgot Password?",
+      forgotUrl: "",
+      signupText: "Sign Up",
+      signupUrl: "",
+      footerLinkColor: "#0078ff"
     },
     "contact": {
       name: "Contact Form",
@@ -1844,6 +1920,7 @@
   const buttonActionRadios = $$('input[name="button-action"]');
   const headerColors = $('#header-colors');
   const subheaderColors = $('#subheader-colors');
+  const footerColors = $('#footer-colors');
   const colorPopup = $('#color-popup');
   const colorOverlay = $('#color-overlay');
   const popupClose = $('#popup-close');
@@ -1874,6 +1951,12 @@
   const copyButton = $('#copy-button');
   const previewButton = $('#preview-button');
 
+  // Footer links elements
+  const forgotTextInput = $('#forgot-text');
+  const forgotUrlInput = $('#forgot-url');
+  const signupTextInput = $('#signup-text');
+  const signupUrlInput = $('#signup-url');
+
 
   // Custom color picker elements
   const customColorPopup = $('#custom-color-popup');
@@ -1894,6 +1977,7 @@
   let currentCustomTarget = null;
   let fieldCounter = 2;
   let headerColorsArray = [];
+  let footerLinkColor = '#0078ff';
   const examplePlaceholders = ['e.g., Address', 'e.g., Country', 'e.g., Phone Number', 'e.g., City', 'e.g., Zip Code'];
 
 
@@ -1988,6 +2072,14 @@
     return '#00b7ff';
   }
 
+  function getFooterLinkColor() {
+    const link = document.querySelector('#footer-links a');
+    if (!link) return '#0078ff';
+    let col = link.style.color;
+    if (!col) col = getComputedStyle(link).color;
+    return colorToHex(col);
+  }
+
 
   function applyCustomColor(hex) {
     if (!currentCustomTarget) return;
@@ -2018,6 +2110,10 @@
       loginButton.style.background = color;
       loginButton.style.backgroundImage = 'none';
       loginButton.style.color = color === '#ffffff' ? '#000000' : '#ffffff';
+    } else if (currentCustomTarget === 'footer') {
+      footerLinkColor = color;
+      const links = document.querySelectorAll('#footer-links a');
+      links.forEach(link => link.style.color = color);
     }
   }
 
@@ -2363,6 +2459,43 @@
   }
 
 
+  function updateFooterLinkColor() {
+    const links = document.querySelectorAll('#footer-links a');
+    links.forEach(link => link.style.color = footerLinkColor);
+  }
+
+
+  function updateFooterLinks() {
+    const forgotText = forgotTextInput.value.trim();
+    const forgotUrl = normalizeUrl(forgotUrlInput.value.trim()) || '#';
+    const signupText = signupTextInput.value.trim();
+    const signupUrl = normalizeUrl(signupUrlInput.value.trim()) || '#';
+
+    const forgotContainer = $('#forgot-container');
+    const forgotLink = $('#forgot-link');
+    const signupContainer = $('#signup-container');
+    const signupLink = $('#signup-link');
+
+    if (currentTemplate === 'sign-in' && forgotText) {
+      forgotLink.textContent = forgotText;
+      forgotLink.href = forgotUrl;
+      forgotContainer.style.display = 'block';
+    } else {
+      forgotContainer.style.display = 'none';
+    }
+
+    if (currentTemplate === 'sign-in' && signupText) {
+      signupLink.textContent = signupText;
+      signupLink.href = signupUrl;
+      signupContainer.style.display = 'block';
+    } else {
+      signupContainer.style.display = 'none';
+    }
+
+    updateFooterLinkColor();
+  }
+
+
   function showColorPopup(target, title) {
     currentColorTarget = target;
     popupTitle.textContent = title;
@@ -2497,6 +2630,11 @@
       buttonAction: document.querySelector('input[name="button-action"]:checked').value,
       buttonUrl: buttonUrlInput.value || '',
       buttonMessage: buttonMessageInput.value || '',
+      forgotText: forgotTextInput.value || '',
+      forgotUrl: forgotUrlInput.value || '',
+      signupText: signupTextInput.value || '',
+      signupUrl: signupUrlInput.value || '',
+      footerLinkColor: getFooterLinkColor(),
       theme: document.body.classList.contains('dark-mode') ? 'dark' : 'light'
     };
 
@@ -2595,6 +2733,7 @@
     loginButton.style.pointerEvents = 'auto';
     updateHeaderText(headerInput.value || 'my form');
     updateSubheaderText(subheaderInput.value || 'fill the form');
+    updateFooterLinks();
   }
 
 
@@ -2702,9 +2841,15 @@
     document.querySelector(`input[name="button-action"][value="${state.buttonAction}"]`).checked = true;
     buttonUrlInput.value = state.buttonUrl || '';
     buttonMessageInput.value = state.buttonMessage || '';
+    forgotTextInput.value = state.forgotText || '';
+    forgotUrlInput.value = state.forgotUrl || '';
+    signupTextInput.value = state.signupText || '';
+    signupUrlInput.value = state.signupUrl || '';
+    footerLinkColor = state.footerLinkColor || '#0078ff';
     toggleButtonActionInputs();
     updateHeaderText(state.headerText || 'my form');
     updateSubheaderText(state.subheaderText || 'fill the form');
+    updateFooterLinks();
     updateLoginContainerHeight();
   }
 
@@ -2751,7 +2896,20 @@
     document.querySelector(`input[name="button-action"][value="${templates[templateId].buttonAction}"]`).checked = true;
     buttonUrlInput.value = templates[templateId].buttonUrl;
     buttonMessageInput.value = templates[templateId].buttonMessage;
+    if (templateId === 'sign-in') {
+      forgotTextInput.value = templates[templateId].forgotText || '';
+      forgotUrlInput.value = templates[templateId].forgotUrl || '';
+      signupTextInput.value = templates[templateId].signupText || '';
+      signupUrlInput.value = templates[templateId].signupUrl || '';
+      footerLinkColor = templates[templateId].footerLinkColor || '#0078ff';
+    } else {
+      forgotTextInput.value = '';
+      forgotUrlInput.value = '';
+      signupTextInput.value = '';
+      signupUrlInput.value = '';
+    }
     toggleButtonActionInputs();
+    updateFooterLinks();
     updateLoginContainerHeight();
   }
 
@@ -2799,6 +2957,21 @@
 
   buttonActionRadios.forEach(radio => {
     radio.addEventListener('change', toggleButtonActionInputs);
+  });
+
+
+  // Footer links listeners
+  forgotTextInput.addEventListener('input', updateFooterLinks);
+  forgotUrlInput.addEventListener('input', updateFooterLinks);
+  signupTextInput.addEventListener('input', updateFooterLinks);
+  signupUrlInput.addEventListener('input', updateFooterLinks);
+
+
+  footerColors.querySelectorAll('.color-box').forEach(box => {
+    box.addEventListener('click', () => {
+      footerLinkColor = box.getAttribute('data-color');
+      updateFooterLinkColor();
+    });
   });
 
 
@@ -2865,6 +3038,7 @@
   $('#custom-subheader-color-btn').addEventListener('click', () => openCustomPicker('subheader'));
   $('#custom-border-color-btn').addEventListener('click', () => openCustomPicker('border'));
   $('#custom-button-color-btn').addEventListener('click', () => openCustomPicker('button'));
+  $('#custom-footer-color-btn').addEventListener('click', () => openCustomPicker('footer'));
 
 
   popupClose.addEventListener('click', hideColorPopup);
